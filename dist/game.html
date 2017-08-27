@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>I am a Dominion player</title>
+    <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/game.css" rel="stylesheet" type="text/css" media="all" />
+  </head>
+  <body>
+    <script>
+      document.body.style.backgroundImage = `url('image/background/${(Math.floor(Math.random() * 10) + 1).toString().padStart(2, "0")}.jpg')`;
+    </script>
+    <div id="content">
+      <div id="game">
+        <div id="first-column" class="column">
+          <div id="players">
+            <div class="player">
+              <p>
+                <img src="image/avatar/09.jpg" alt="avatar" class="avatar">
+              </p>
+              <p>
+                <span class="hand-card-count" title="手札の枚数">5</span>
+              </p>
+            </div>
+            <div class="player">
+              <p>
+                <img src="image/avatar/10.jpg" alt="avatar" class="avatar">
+              </p>
+              <p>
+                <span class="hand-card-count" title="手札の枚数">5</span>
+              </p>
+            </div>
+            <div class="player">
+              <p>
+                <img src="image/avatar/12.jpg" alt="avatar" class="avatar">
+              </p>
+              <p>
+                <span class="hand-card-count" title="手札の枚数">5</span>
+              </p>
+            </div>
+          </div>
+          <div id="information">
+            <span>{{text}}</span>
+          </div>
+          <div id="other">
+
+          </div>
+        </div>
+        <div id="second-column" class="column">
+          <div id="market">
+            <div id="first-market-column" class="column">
+              <!-- <div class="card">
+                 <img src="image/card/Copper.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Silver.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Gold.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Estate.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Duchy.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Province.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Curse.png" alt="card"/>
+              </div>  -->
+            </div>
+            <div id="second-market-column" class="column">
+              <!-- <div class="card">
+                <img src="image/card/Cellar.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Market.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Militia.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Mine.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Moat.png" alt="card"/>
+              </div> -->
+            </div>
+            <div id="third-market-column" class="column">
+              <!-- <div class="card">
+                <img src="image/card/Remodel.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Smithy.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Village.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Woodcutter.png" alt="card"/>
+              </div>
+              <div class="card">
+                <img src="image/card/Workshop.png" alt="card"/>
+              </div> -->
+            </div>
+            <div class="player">
+              <p>
+                <img src="image/avatar/01.jpg" alt="avatar" class="avatar">
+              </p>
+            </div>
+            <div id="trash">
+              <p>廃棄</p>
+               <div class="card">
+                <img src="image/card/Trash.png" alt="card"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="third-column" class="column">
+          <div id="actions-wrapper">
+            <div id="points">
+              <div>
+                <span id="action-point">0</span><br>
+                アクション
+              </div>
+              <div>
+                <span id="buy-point">0</span><br>
+                購入
+              </div>
+              <div>
+                <span id="coin-point">0</span><br>
+                コイン
+              </div>
+            </div>
+            <div id="end-wrapper">
+              <button id="end-button">ターンを終了する</button>
+            </div>
+          </div>
+          <div id="field">
+            <!-- <div class="card">
+              <img src="image/card/Village.png" alt="card"/>
+            </div>
+            <div class="card">
+              <img src="image/card/Thief.png" alt="card"/>
+            </div>
+            <div class="card">
+              <img src="image/card/Smithy.png" alt="card"/>
+            </div>
+            <div class="card">
+              <img src="image/card/Witch.png" alt="card"/>
+            </div> -->
+          </div>
+        </div>
+        <div id="fourth-column" class="column">
+          <div id="hand-cards">
+            <div v-for="card in cards">
+              <card-component :card="card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

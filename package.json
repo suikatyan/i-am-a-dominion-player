@@ -1,0 +1,19 @@
+{
+  "name": "i-am-a-dominion-player",
+  "version": "1.0.0",
+  "description": "カードゲーム『Dominion』です。",
+  "author": "suikatyan",
+  "license": "MIT",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "dependencies": {
+    "vue": "^2.4.2"
+  },
+  "devDependencies": {
+    "path": "^0.12.7",
+    "ts-loader": "^2.3.2",
+    "typescript": "^2.4.2",
+    "webpack": "^3.5.1"
+  }
+}

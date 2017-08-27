@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "noImplicitAny": true,
+        "sourceMap": false,
+        "alwaysStrict": true,
+        "outDir": "dist/js/",
+        "removeComments": true,
+        "watch": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "src/ts"
+    },
+    "include": [
+        "src/ts/**/*"
+    ],
+    "compileOnSave": true
+}

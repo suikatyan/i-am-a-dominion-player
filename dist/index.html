@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>I am a Dominion player</title>
+    <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" media="all" />
+  </head>
+  <body>
+    <script>
+      document.body.style.backgroundImage = `url('image/background/${(Math.floor(Math.random() * 10) + 1).toString().padStart(2, "0")}.jpg')`;
+    </script>
+    <div id="content">
+      <h1>I am  a Dominion player</h1>
+      <h2>カードセット選択</h2>
+        <div id="card-sets">
+          <div data-card-set="ramdom">
+            <a href="game.html?cardset=ramdom">
+              <h3>ランダム</h3>
+              <div class="card-list">
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+                <img src="image/card/Back.png" alt="card"/>
+              </div>
+            </a>
+          </div>
+          <div data-card-set="first-game">
+            <a href="game.html?cardset=first-game">
+              <h3>最初のゲーム</h3>
+              <div class="card-list">
+                <img src="image/card/Cellar.png" alt="card"/>
+                <img src="image/card/Market.png" alt="card"/>
+                <img src="image/card/Militia.png" alt="card"/>
+                <img src="image/card/Mine.png" alt="card"/>
+                <img src="image/card/Moat.png" alt="card"/>
+                <img src="image/card/Remodel.png" alt="card"/>
+                <img src="image/card/Smithy.png" alt="card"/>
+                <img src="image/card/Woodcutter.png" alt="card"/>
+                <img src="image/card/Village.png" alt="card"/>
+                <img src="image/card/Workshop.png" alt="card"/>
+              </div>
+            </a>
+          </div>
+          <div data-card-set="big-money">
+            <a href="game.html?cardset=big-money">
+              <h3>ビッグマネー</h3>
+              <div class="card-list">
+                <img src="image/card/Adventurer.png" alt="card"/>
+                <img src="image/card/Bureaucrat.png" alt="card"/>
+                <img src="image/card/Chancellor.png" alt="card"/>
+                <img src="image/card/Chapel.png" alt="card"/>
+                <img src="image/card/Feast.png" alt="card"/>
+                <img src="image/card/Laboratory.png" alt="card"/>
+                <img src="image/card/Market.png" alt="card"/>
+                <img src="image/card/Mine.png" alt="card"/>
+                <img src="image/card/Moneylender.png" alt="card"/>
+                <img src="image/card/ThroneRoom.png" alt="card"/>
+              </div>
+            </a>
+          </div>
+          <div data-card-set="interaction">
+            <a href="game.html?cardset=interaction">
+              <h3>相互作用</h3>
+              <div class="card-list">
+                <img src="image/card/Bureaucrat.png" alt="card"/>
+                <img src="image/card/Chancellor.png" alt="card"/>
+                <img src="image/card/CouncilRoom.png" alt="card"/>
+                <img src="image/card/Festival.png" alt="card"/>
+                <img src="image/card/Library.png" alt="card"/>
+                <img src="image/card/Militia.png" alt="card"/>
+                <img src="image/card/Moat.png" alt="card"/>
+                <img src="image/card/Spy.png" alt="card"/>
+                <img src="image/card/Thief.png" alt="card"/>
+                <img src="image/card/Village.png" alt="card"/>
+              </div>
+            </a>
+          </div>
+          <div data-card-set="size-distortion">
+            <a href="game.html?cardset=size-distortion">
+              <h3>サイズ変形</h3>
+              <div class="card-list">
+                <img src="image/card/Cellar.png" alt="card"/>
+                <img src="image/card/Chapel.png" alt="card"/>
+                <img src="image/card/Feast.png" alt="card"/>
+                <img src="image/card/Gardens.png" alt="card"/>
+                <img src="image/card/Laboratory.png" alt="card"/>
+                <img src="image/card/Thief.png" alt="card"/>
+                <img src="image/card/Village.png" alt="card"/>
+                <img src="image/card/Witch.png" alt="card"/>
+                <img src="image/card/Woodcutter.png" alt="card"/>
+                <img src="image/card/Workshop.png" alt="card"/>
+              </div>
+            </a>
+          </div>
+          <div data-card-set="village-square">
+            <a href="game.html?cardset=village-square">
+              <h3>村の広場</h3>
+              <div class="card-list">
+                <img src="image/card/Bureaucrat.png" alt="card"/>
+                <img src="image/card/Cellar.png" alt="card"/>
+                <img src="image/card/Festival.png" alt="card"/>
+                <img src="image/card/Library.png" alt="card"/>
+                <img src="image/card/Market.png" alt="card"/>
+                <img src="image/card/Remodel.png" alt="card"/>
+                <img src="image/card/Smithy.png" alt="card"/>
+                <img src="image/card/Witch.png" alt="card"/>
+                <img src="image/card/ThroneRoom.png" alt="card"/>
+                <img src="image/card/Village.png" alt="card"/>
+              </div>
+            </a>
+          </div>
+        </div>
+      <h2>このサイトについて</h2>
+        <p>
+          I am a Dominion playerはプログラミング学習のために作成したものです。<br>
+          基本セットに対応しています。Google Chrome最新版でプレイしてください。<br><br>
+          本サイトで扱っているカードゲーム「Dominion」はRio Grande Gamesに帰属します。
+          カード画像は「ドミニオンオンラインツール Ver 3.0.0.0」から拝借しました。
+          本サイトの背景画像などは「<a href="https://www.pakutaso.com" title="フリー写真素材ぱくたそ" target="_blank">フリー写真素材ぱくたそ</a>」から拝借しました。
+        </p>
+    </div>
+  </body>
+</html>

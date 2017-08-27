@@ -1,0 +1,157 @@
+.column {
+  display: flex;
+  margin: 0;
+}
+
+#first-column {
+  /* background-color: tomato; */
+  height: 120px;
+  width: 100%;
+  display: flex;
+}
+
+#players, #information, #other {
+  flex-basis: 400px;
+}
+
+#players {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player {
+  height: 100%;
+  text-align: center;
+}
+
+.player > p {
+  margin: 10px 0;
+}
+
+
+#second-column .player {
+  position: absolute;
+  top: 310px;
+  left: 10px;
+}
+
+.avatar {
+  border-radius: 50px;
+  width: 70px;
+  box-shadow: 0 0 13px 2px rgba(0, 0, 0, 0.4);
+}
+
+.active-player {
+  box-shadow: 0 0 20px 2px rgba(255, 189, 0, 0.70) !important;
+}
+
+#second-column {
+  /* background-color: orange; */
+  height: 410px;
+  width: 100%;
+  padding: 0 0;
+}
+
+#market {
+  width: 100%;
+  padding: 10px 100px;
+  position: relative;
+}
+
+#market > .column {
+  height: 136px;
+  display: flex;
+  justify-content: center;
+}
+
+#market .card {
+  height: 103px;
+  padding: 0 10px;
+  flex-basis: 82px;
+}
+
+#trash {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background-color: lightseagreen;
+  padding: 5px;
+}
+
+#trash > p {
+  text-align: center;
+  margin: 0 0;
+}
+
+#third-column {
+  background-color: rgba(255, 175, 0, 0.52);
+  height: 120px;
+  width: 100%;
+}
+
+#actions-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#points {
+  width: 200px;
+  /* background-color: green; */
+  flex-basis: 100px;
+  display: flex;
+  font-size: 10px;
+}
+
+#points > div {
+  flex-grow: 1;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#action-point, #buy-point, #coin-point {
+  font-size: 25px;
+  border-radius: 10px;
+}
+
+#end-wrapper {
+  width: 200px;
+  /* background-color: purple; */
+  flex-basis: 100px;
+  text-align: center;
+}
+
+#end-button {
+  width: 170px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+#fourth-column {
+  /* background-color: red; */
+  height: 150px;
+  width: 100%;
+}
+
+#hand-cards, #field {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#hand-cards .card {
+  flex-basis: 104px;
+  height: 130px;
+  margin: 0 5px;
+}
+
+#field .card {
+  flex-basis: 80px;
+  height: auto;
+  margin: 0 5px;
+}
+
+.card > img {
+  height: 100%;
+  width: 100%;
+}

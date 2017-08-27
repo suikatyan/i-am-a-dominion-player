@@ -1,0 +1,38 @@
+h1 {
+  text-align: center;
+}
+
+h2 {
+  border-left: 10px solid blue;
+  margin: 5px 50px;
+  padding: 5px;
+}
+
+#card-sets, p {
+  margin: 3px 50px;
+  padding: 5px;
+}
+
+#card-sets {
+  height: 450px;
+  overflow: auto;
+}
+
+#card-sets > div {
+  padding: 10px;
+  transition: background 100ms 0s ease;
+  border-radius: 5px;
+}
+
+#card-sets > div:hover {
+  background-color: rgba(255, 200, 0, 0.7);
+}
+
+.card-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-list > img {
+  flex-basis: 72px;
+}
