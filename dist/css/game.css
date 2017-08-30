@@ -28,11 +28,27 @@
   margin: 10px 0;
 }
 
-
 #second-column .player {
   position: absolute;
-  top: 310px;
+  top: 290px;
   left: 10px;
+}
+
+.card-count {
+  padding: 0 3px;
+  border-radius: 10px;
+}
+
+div .card-count:nth-child(1) {
+  background-color: #83F87C;
+}
+
+div .card-count:nth-child(2) {
+  background-color: #83F87C;
+}
+
+div .card-count:nth-child(3) {
+  background-color: #83F87C;
 }
 
 .avatar {
