@@ -3,7 +3,8 @@
 npm-debug.log
 
 ### VisualStudioCode ###
-/.vscode/
+/.vscode/*
+!/.vscode/tasks.json
 
 ### Windows ###
 # Windows thumbnail cache files
