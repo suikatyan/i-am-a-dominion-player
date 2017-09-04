@@ -1,6 +1,11 @@
 import CardId from "list/CardId";
+import PlayerHandler from 'handler/PlayerHandler';
+import DI from "util/DI";
 
 export default abstract class AbstractCardSet {
+  @DI.inject()
+  private playerHandler: () => PlayerHandler;
+
   startCards() : Map<CardId, number> {
     return new Map([
       [CardId.Copper, 7],
@@ -8,7 +13,8 @@ export default abstract class AbstractCardSet {
     ]);
   }
 
-  basicSupplyCards(playerCount: number) : Map<CardId, number> {
+  basicSupplyCards() : Map<CardId, number> {
+    const playerCount = this.playerHandler().count();
     const victoryCount = playerCount === 2 ? 8 : 12;
     const curseCount = playerCount * 2 - 10;
 
@@ -25,9 +31,9 @@ export default abstract class AbstractCardSet {
 
   abstract kingdomCards() : Map<CardId, number>;
 
-  allCards() : Set<CardId> {
-    const a = Array.from(this.basicSupplyCards(2).keys());
-    const b = Array.from(this.kingdomCards().keys());
-    return new Set(a.concat(b));
+  allCards() : Map<CardId, number> {
+    const a = Array.from(this.basicSupplyCards());
+    const b = Array.from(this.kingdomCards());
+    return new Map(a.concat(b));
   }
 }

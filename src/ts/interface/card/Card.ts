@@ -8,4 +8,5 @@ export default interface Card {
   category: () => CardCategory;
   cost: () => number;
   description: () => string;
+  isKingdomCard: () => boolean;
 }

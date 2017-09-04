@@ -25,10 +25,14 @@ export default class Estate extends AbstractCard implements Victory {
   }
 
   description() {
-    return "";
+    return "[vp 1]。";
   }
 
   victoryPoint() {
     return 1;
+  }
+
+  isKingdomCard() {
+    return false;
   }
 }

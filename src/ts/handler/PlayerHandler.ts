@@ -11,13 +11,16 @@ export default class PlayerHandler {
 
   constructor() {
     this.loadView = new Vue({
-      el: "#players",
+      el: "#me",
       data: {
-
+        players: this.players,
       },
     });
     this.robotView = new Vue({
-
+      el: "#other-players",
+      data: {
+        players: this.players,
+      },
     });
   }
 
@@ -55,5 +58,9 @@ export default class PlayerHandler {
     }
 
     return output;
+  }
+
+  count() {
+    return this.players.length;
   }
 }

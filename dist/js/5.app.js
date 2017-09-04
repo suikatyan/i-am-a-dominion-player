@@ -1,11 +1,9 @@
 webpackJsonp([5],{
 
 /***/ 38:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
 var CardId;
 (function (CardId) {
     CardId["Copper"] = "Copper";
@@ -26,36 +24,36 @@ var CardId;
     CardId["Woodcutter"] = "Woodcutter";
     CardId["Workshop"] = "Workshop";
 })(CardId || (CardId = {}));
-exports.default = CardId;
+/* harmony default export */ __webpack_exports__["a"] = (CardId);
 
 
 /***/ }),
 
 /***/ 5:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_list_CardId__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", { value: true });
-const CardId_1 = __webpack_require__(38);
 class AbstractCardSet {
     startCards() {
         return new Map([
-            [CardId_1.default.Copper, 7],
-            [CardId_1.default.Estate, 3],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Copper, 7],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Estate, 3],
         ]);
     }
     basicSupplyCards(playerCount) {
         const victoryCount = playerCount === 2 ? 8 : 12;
         const curseCount = playerCount * 2 - 10;
         return new Map([
-            [CardId_1.default.Copper, 60],
-            [CardId_1.default.Silver, 40],
-            [CardId_1.default.Gold, 30],
-            [CardId_1.default.Estate, victoryCount],
-            [CardId_1.default.Duchy, victoryCount],
-            [CardId_1.default.Province, victoryCount],
-            [CardId_1.default.Curse, curseCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Copper, 60],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Silver, 40],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Gold, 30],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Estate, victoryCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Duchy, victoryCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Province, victoryCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Curse, curseCount],
         ]);
     }
     allCards() {
@@ -64,7 +62,8 @@ class AbstractCardSet {
         return new Set(a.concat(b));
     }
 }
-exports.default = AbstractCardSet;
+/* harmony export (immutable) */ __webpack_exports__["default"] = AbstractCardSet;
+
 
 
 /***/ })

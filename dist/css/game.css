@@ -10,11 +10,11 @@
   display: flex;
 }
 
-#players, #information, #other {
+#other-players, #information, #other {
   flex-basis: 400px;
 }
 
-#players {
+#other-players {
   display: flex;
   justify-content: space-around;
 }
@@ -28,6 +28,13 @@
   margin: 10px 0;
 }
 
+#information {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #second-column .player {
   position: absolute;
   top: 290px;
@@ -39,16 +46,8 @@
   border-radius: 10px;
 }
 
-div .card-count:nth-child(1) {
-  background-color: #83F87C;
-}
-
-div .card-count:nth-child(2) {
-  background-color: #83F87C;
-}
-
-div .card-count:nth-child(3) {
-  background-color: #83F87C;
+div .card-count {
+  box-shadow: inset 0 0 6px 0px rgba(0, 0, 0, 0.66)
 }
 
 .avatar {
@@ -68,7 +67,7 @@ div .card-count:nth-child(3) {
   padding: 0 0;
 }
 
-#market {
+#market-area {
   width: 100%;
   padding: 10px 100px;
   position: relative;
@@ -80,9 +79,9 @@ div .card-count:nth-child(3) {
   justify-content: center;
 }
 
-#market .card {
+#market-area .card {
   height: 103px;
-  padding: 0 10px;
+  margin: 0 10px;
   flex-basis: 82px;
 }
 
@@ -167,7 +166,10 @@ div .card-count:nth-child(3) {
   margin: 0 5px;
 }
 
-.card > img {
-  height: 100%;
-  width: 100%;
+.card {
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.49);
 }
+
+/* .card:hover {
+  box-shadow: 0 0 17px 3px rgba(255, 221, 0, 0.9);
+} */

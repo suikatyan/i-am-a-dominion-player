@@ -4,4 +4,5 @@ export default interface Player {
   isRobot: () => boolean;
   getProperty: () => PropertyHandler;
   name: () => string;
+  image: () => string;
 }

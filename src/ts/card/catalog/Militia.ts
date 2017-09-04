@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Celler extends AbstractCard implements Action {
+export default class Militia extends AbstractCard implements Action {
   cardId () {
-    return CardId.Celler;
+    return CardId.Militia;
   }
 
   name() {
-    return "地下貯蔵庫";
+    return "民兵";
   }
 
   category() {
@@ -19,23 +19,28 @@ export default class Celler extends AbstractCard implements Action {
   }
 
   cost() {
-    return 2;
+    return 4;
   }
 
   description() {
-    return "+1 アクション。好きな枚数のカードを捨て札にし、 同じ枚数のカードを引く。";
+    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
+      ActionCategory.Attack,
     ]);
   }
 
   effect() {
     return new ActionEffectCollection({
-      action: 1,
+      coin: 2,
     });
+  }
+
+  isKingdomCard() {
+    return true;
   }
 
   excute() {

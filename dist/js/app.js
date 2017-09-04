@@ -1,36 +1,6 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	var parentJsonpFunction = window["webpackJsonp"];
-/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// objects to store loaded and loading chunks
-/******/ 	var installedChunks = {
-/******/ 		6: 0
-/******/ 	};
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -56,55 +26,6 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData === 0) {
-/******/ 			return new Promise(function(resolve) { resolve(); });
-/******/ 		}
-/******/
-/******/ 		// a Promise means "currently loading".
-/******/ 		if(installedChunkData) {
-/******/ 			return installedChunkData[2];
-/******/ 		}
-/******/
-/******/ 		// setup Promise in chunk cache
-/******/ 		var promise = new Promise(function(resolve, reject) {
-/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 		});
-/******/ 		installedChunkData[2] = promise;
-/******/
-/******/ 		// start chunk loading
-/******/ 		var head = document.getElementsByTagName('head')[0];
-/******/ 		var script = document.createElement('script');
-/******/ 		script.type = 'text/javascript';
-/******/ 		script.charset = 'utf-8';
-/******/ 		script.async = true;
-/******/ 		script.timeout = 120000;
-/******/
-/******/ 		if (__webpack_require__.nc) {
-/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + chunkId + ".app.js";
-/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
-/******/ 		script.onerror = script.onload = onScriptComplete;
-/******/ 		function onScriptComplete() {
-/******/ 			// avoid mem leaks in IE.
-/******/ 			script.onerror = script.onload = null;
-/******/ 			clearTimeout(timeout);
-/******/ 			var chunk = installedChunks[chunkId];
-/******/ 			if(chunk !== 0) {
-/******/ 				if(chunk) {
-/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
-/******/ 				}
-/******/ 				installedChunks[chunkId] = undefined;
-/******/ 			}
-/******/ 		};
-/******/ 		head.appendChild(script);
-/******/
-/******/ 		return promise;
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -138,11 +59,8 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 /******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -177,6 +95,75 @@ exports.default = DI;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var CardId;
+(function (CardId) {
+    CardId["Copper"] = "Copper";
+    CardId["Silver"] = "Silver";
+    CardId["Gold"] = "Gold";
+    CardId["Estate"] = "Estate";
+    CardId["Duchy"] = "Duchy";
+    CardId["Province"] = "Province";
+    CardId["Curse"] = "Curse";
+    CardId["Cellar"] = "Cellar";
+    CardId["Market"] = "Market";
+    CardId["Militia"] = "Militia";
+    CardId["Mine"] = "Mine";
+    CardId["Moat"] = "Moat";
+    CardId["Remodel"] = "Remodel";
+    CardId["Smithy"] = "Smithy";
+    CardId["Village"] = "Village";
+    CardId["Woodcutter"] = "Woodcutter";
+    CardId["Workshop"] = "Workshop";
+})(CardId || (CardId = {}));
+exports.default = CardId;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var CardCategory;
+(function (CardCategory) {
+    CardCategory["Treasure"] = "Treasure";
+    CardCategory["Victory"] = "Victory";
+    CardCategory["Action"] = "Action";
+    CardCategory["Curse"] = "Curse";
+})(CardCategory || (CardCategory = {}));
+exports.default = CardCategory;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const UniqueId_1 = __webpack_require__(24);
+class AbstractCard {
+    constructor() {
+        this._itemId = UniqueId_1.default.generate();
+    }
+    itemId() {
+        return this._itemId;
+    }
+    imagesrc() {
+        return `image/card/${this.cardId()}.png`;
+    }
+}
+exports.default = AbstractCard;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 class Util {
     static shuffle(array) {
         for (var i = array.length - 1; i > 0; i--) {
@@ -204,30 +191,7 @@ exports.default = Util;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const PropertyHandler_1 = __webpack_require__(18);
-class AbstractPlayer {
-    constructor(playerIndex) {
-        this.propertyHandler = new PropertyHandler_1.default();
-        this.playerIndex = playerIndex;
-    }
-    async initilize() {
-        await this.propertyHandler.initilize();
-    }
-    getProperty() {
-        return this.propertyHandler;
-    }
-}
-exports.default = AbstractPlayer;
-
-
-/***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10318,45 +10282,197 @@ Vue$3.compile = compileToFunctions;
 
 /* harmony default export */ __webpack_exports__["default"] = (Vue$3);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(23), __webpack_require__(24)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(28), __webpack_require__(29)))
 
 /***/ }),
-/* 4 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const CardId_1 = __webpack_require__(1);
+const DI_1 = __webpack_require__(0);
+class AbstractCardSet {
+    startCards() {
+        return new Map([
+            [CardId_1.default.Copper, 7],
+            [CardId_1.default.Estate, 3],
+        ]);
+    }
+    basicSupplyCards() {
+        const playerCount = this.playerHandler().count();
+        const victoryCount = playerCount === 2 ? 8 : 12;
+        const curseCount = playerCount * 2 - 10;
+        return new Map([
+            [CardId_1.default.Copper, 60],
+            [CardId_1.default.Silver, 40],
+            [CardId_1.default.Gold, 30],
+            [CardId_1.default.Estate, victoryCount],
+            [CardId_1.default.Duchy, victoryCount],
+            [CardId_1.default.Province, victoryCount],
+            [CardId_1.default.Curse, curseCount],
+        ]);
+    }
+    allCards() {
+        const a = Array.from(this.basicSupplyCards());
+        const b = Array.from(this.kingdomCards());
+        return new Map(a.concat(b));
+    }
+}
+__decorate([
+    DI_1.default.inject()
+], AbstractCardSet.prototype, "playerHandler", void 0);
+exports.default = AbstractCardSet;
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var CardCategory;
-(function (CardCategory) {
-    CardCategory["Treasure"] = "Treasure";
-    CardCategory["Victory"] = "Victory";
-    CardCategory["Action"] = "Action";
-    CardCategory["Curse"] = "Curse";
-})(CardCategory || (CardCategory = {}));
-exports.default = CardCategory;
+const PropertyHandler_1 = __webpack_require__(20);
+const AvatarFactory_1 = __webpack_require__(43);
+class AbstractPlayer {
+    constructor(playerIndex) {
+        this.propertyHandler = new PropertyHandler_1.default();
+        this._image = AvatarFactory_1.default.build();
+        this.playerIndex = playerIndex;
+    }
+    async initilize() {
+        await this.propertyHandler.initilize();
+    }
+    getProperty() {
+        return this.propertyHandler;
+    }
+    image() {
+        return this._image;
+    }
+}
+exports.default = AbstractPlayer;
 
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */,
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Copper extends AbstractCard_1.default {
+    value() {
+        return 1;
+    }
+    cardId() {
+        return CardId_1.default.Copper;
+    }
+    name() {
+        return "銅貨";
+    }
+    category() {
+        return CardCategory_1.default.Treasure;
+    }
+    cost() {
+        return 0;
+    }
+    description() {
+        return "[treasure 1]。";
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Copper;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Curse extends AbstractCard_1.default {
+    value() {
+        return 1;
+    }
+    cardId() {
+        return CardId_1.default.Curse;
+    }
+    name() {
+        return "呪い";
+    }
+    category() {
+        return CardCategory_1.default.Curse;
+    }
+    cost() {
+        return 0;
+    }
+    description() {
+        return "[vp -1]。";
+    }
+    victoryPoint() {
+        return -1;
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Curse;
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(12);
-const Dominion_1 = __webpack_require__(30);
-(async () => {
-    const application = new Dominion_1.default();
-    await application.initialize();
-    await application.startSession();
-})();
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Estate extends AbstractCard_1.default {
+    value() {
+        return 1;
+    }
+    cardId() {
+        return CardId_1.default.Estate;
+    }
+    name() {
+        return "屋敷";
+    }
+    category() {
+        return CardCategory_1.default.Victory;
+    }
+    cost() {
+        return 2;
+    }
+    description() {
+        return "[vp 1]。";
+    }
+    victoryPoint() {
+        return 1;
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Estate;
 
 
 /***/ }),
@@ -10366,13 +10482,25 @@ const Dominion_1 = __webpack_require__(30);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DI_1 = __webpack_require__(0);
-const Context_1 = __webpack_require__(13);
-const PlayerHandler_1 = __webpack_require__(16);
-const NotificationHandler_1 = __webpack_require__(29);
-DI_1.default.subscribe("playerHandler", new PlayerHandler_1.default());
-DI_1.default.subscribe("context", new Context_1.default());
-DI_1.default.subscribe("notification", new NotificationHandler_1.default());
+const AbstractCardSet_1 = __webpack_require__(6);
+const CardId_1 = __webpack_require__(1);
+class FirstGame extends AbstractCardSet_1.default {
+    kingdomCards() {
+        return new Map([
+            [CardId_1.default.Cellar, 10],
+            [CardId_1.default.Market, 10],
+            [CardId_1.default.Woodcutter, 10],
+            [CardId_1.default.Militia, 10],
+            [CardId_1.default.Mine, 10],
+            [CardId_1.default.Moat, 10],
+            [CardId_1.default.Remodel, 10],
+            [CardId_1.default.Smithy, 10],
+            [CardId_1.default.Village, 10],
+            [CardId_1.default.Workshop, 10],
+        ]);
+    }
+}
+exports.default = FirstGame;
 
 
 /***/ }),
@@ -10382,8 +10510,42 @@ DI_1.default.subscribe("notification", new NotificationHandler_1.default());
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const TurnContext_1 = __webpack_require__(14);
-const GameContext_1 = __webpack_require__(15);
+__webpack_require__(14);
+const Dominion_1 = __webpack_require__(35);
+(async () => {
+    const application = new Dominion_1.default();
+    await application.initialize();
+    await application.startSession();
+})();
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const DI_1 = __webpack_require__(0);
+const Context_1 = __webpack_require__(15);
+const PlayerHandler_1 = __webpack_require__(18);
+const NotificationHandler_1 = __webpack_require__(34);
+const MarketHandler_1 = __webpack_require__(44);
+DI_1.default.subscribe("playerHandler", new PlayerHandler_1.default());
+DI_1.default.subscribe("context", new Context_1.default());
+DI_1.default.subscribe("notification", new NotificationHandler_1.default());
+DI_1.default.subscribe("marketHandler", new MarketHandler_1.default());
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TurnContext_1 = __webpack_require__(16);
+const GameContext_1 = __webpack_require__(17);
 class Context {
     constructor() {
         this.game = new GameContext_1.default();
@@ -10394,7 +10556,7 @@ exports.default = Context;
 
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10424,7 +10586,7 @@ exports.default = TurnContext;
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10436,24 +10598,31 @@ exports.default = GameContext;
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Lord_1 = __webpack_require__(17);
-const Robot_1 = __webpack_require__(28);
-const vue_1 = __webpack_require__(3);
+const Lord_1 = __webpack_require__(19);
+const Robot_1 = __webpack_require__(33);
+const vue_1 = __webpack_require__(5);
 class PlayerHandler {
     constructor() {
         this.players = [];
         this.currentPlayerIndex = -1;
         this.loadView = new vue_1.default({
-            el: "#players",
-            data: {},
+            el: "#me",
+            data: {
+                players: this.players,
+            },
         });
-        this.robotView = new vue_1.default({});
+        this.robotView = new vue_1.default({
+            el: "#other-players",
+            data: {
+                players: this.players,
+            },
+        });
     }
     async createPlayers(playerCount = 0, robotCount = 0) {
         for (let i = 0; i < playerCount; i++) {
@@ -10486,18 +10655,21 @@ class PlayerHandler {
         }
         return output;
     }
+    count() {
+        return this.players.length;
+    }
 }
 exports.default = PlayerHandler;
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractPlayer_1 = __webpack_require__(2);
+const AbstractPlayer_1 = __webpack_require__(7);
 class Lord extends AbstractPlayer_1.default {
     isRobot() {
         return false;
@@ -10510,16 +10682,16 @@ exports.default = Lord;
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Deck_1 = __webpack_require__(19);
-const Hand_1 = __webpack_require__(22);
-const Field_1 = __webpack_require__(26);
-const Discarded_1 = __webpack_require__(27);
+const Deck_1 = __webpack_require__(21);
+const Hand_1 = __webpack_require__(27);
+const Field_1 = __webpack_require__(31);
+const Discarded_1 = __webpack_require__(32);
 class PropertyHandler {
     constructor() {
         this.deck = new Deck_1.default();
@@ -10552,7 +10724,7 @@ exports.default = PropertyHandler;
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10564,8 +10736,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CardFactory_1 = __webpack_require__(20);
-const Util_1 = __webpack_require__(1);
+const CardFactory_1 = __webpack_require__(22);
+const Util_1 = __webpack_require__(4);
 const DI_1 = __webpack_require__(0);
 class Deck {
     constructor() {
@@ -10598,7 +10770,7 @@ exports.default = Deck;
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10607,7 +10779,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class CardFactory {
     static async build(cardId) {
         try {
-            const targetClass = await __webpack_require__(21)(`./${cardId}`);
+            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(23)(`./${cardId}`); });
             return new targetClass.default;
         }
         catch (e) {
@@ -10619,66 +10791,142 @@ exports.default = CardFactory;
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./Celler": [
-		6,
-		0
-	],
-	"./Celler.ts": [
-		6,
-		0
-	],
-	"./Copper": [
-		7,
-		3
-	],
-	"./Copper.ts": [
-		7,
-		3
-	],
-	"./Curse": [
-		8,
-		2
-	],
-	"./Curse.ts": [
-		8,
-		2
-	],
-	"./Estate": [
-		9,
-		1
-	],
-	"./Estate.ts": [
-		9,
-		1
-	]
+	"./Cellar": 66,
+	"./Cellar.ts": 66,
+	"./Copper": 9,
+	"./Copper.ts": 9,
+	"./Curse": 10,
+	"./Curse.ts": 10,
+	"./Duchy": 50,
+	"./Duchy.ts": 50,
+	"./Estate": 11,
+	"./Estate.ts": 11,
+	"./Gold": 48,
+	"./Gold.ts": 48,
+	"./Market": 53,
+	"./Market.ts": 53,
+	"./Militia": 55,
+	"./Militia.ts": 55,
+	"./Mine": 56,
+	"./Mine.ts": 56,
+	"./Moat": 58,
+	"./Moat.ts": 58,
+	"./Province": 52,
+	"./Province.ts": 52,
+	"./Remodel": 60,
+	"./Remodel.ts": 60,
+	"./Silver": 46,
+	"./Silver.ts": 46,
+	"./Smithy": 61,
+	"./Smithy.ts": 61,
+	"./Village": 62,
+	"./Village.ts": 62,
+	"./Woodcutter": 64,
+	"./Woodcutter.ts": 64,
+	"./Workshop": 65,
+	"./Workshop.ts": 65
 };
-function webpackAsyncContext(req) {
-	var ids = map[req];
-	if(!ids)
-		return Promise.reject(new Error("Cannot find module '" + req + "'."));
-	return __webpack_require__.e(ids[1]).then(function() {
-		return __webpack_require__(ids[0]);
-	});
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
 };
-webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 21;
-module.exports = webpackAsyncContext;
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 23;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const vue_1 = __webpack_require__(3);
-const CardComponent_1 = __webpack_require__(25);
+class UniqueId {
+    static generate() {
+        const chars = "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".split("");
+        for (let i = 0, len = chars.length; i < len; i++) {
+            switch (chars[i]) {
+                case "x":
+                    chars[i] = Math.floor(Math.random() * 16).toString(16);
+                    break;
+                case "y":
+                    chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
+                    break;
+            }
+        }
+        return chars.join("");
+    }
+}
+exports.default = UniqueId;
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ActionCategory;
+(function (ActionCategory) {
+    ActionCategory["Action"] = "Action";
+    ActionCategory["Attack"] = "Attack";
+    ActionCategory["Reaction"] = "Reaction";
+})(ActionCategory || (ActionCategory = {}));
+exports.default = ActionCategory;
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class ActionEffectCollection {
+    constructor({ action = 0, buy = 0, card = 0, coin = 0 }) {
+        this._action = action;
+        this._buy = buy;
+        this._card = card;
+        this._coin = coin;
+    }
+    action() {
+        return this.action;
+    }
+    buy() {
+        return this.buy;
+    }
+    card() {
+        return this.card;
+    }
+    coin() {
+        return this.coin;
+    }
+}
+exports.default = ActionEffectCollection;
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const vue_1 = __webpack_require__(5);
+const CardComponent_1 = __webpack_require__(30);
 class Hand {
     constructor() {
         this.cards = [];
@@ -10706,7 +10954,7 @@ exports.default = Hand;
 
 
 /***/ }),
-/* 23 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -10896,7 +11144,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 24 */
+/* 29 */
 /***/ (function(module, exports) {
 
 var g;
@@ -10923,7 +11171,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 25 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10939,7 +11187,7 @@ exports.default = {
 
 
 /***/ }),
-/* 26 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10954,7 +11202,7 @@ exports.default = Field;
 
 
 /***/ }),
-/* 27 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10969,13 +11217,13 @@ exports.default = Discarded;
 
 
 /***/ }),
-/* 28 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractPlayer_1 = __webpack_require__(2);
+const AbstractPlayer_1 = __webpack_require__(7);
 class Robot extends AbstractPlayer_1.default {
     constructor(playerIndex) {
         super(playerIndex);
@@ -10992,13 +11240,13 @@ exports.default = Robot;
 
 
 /***/ }),
-/* 29 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const vue_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(5);
 class NotificationHandler {
     constructor() {
         this.view = new vue_1.default({
@@ -11016,7 +11264,7 @@ exports.default = NotificationHandler;
 
 
 /***/ }),
-/* 30 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11028,11 +11276,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractApplication_1 = __webpack_require__(31);
-const SessionHandler_1 = __webpack_require__(32);
+const AbstractApplication_1 = __webpack_require__(36);
+const SessionHandler_1 = __webpack_require__(37);
 const DI_1 = __webpack_require__(0);
-const CardSetFactory_1 = __webpack_require__(36);
-const Util_1 = __webpack_require__(1);
+const CardSetFactory_1 = __webpack_require__(41);
+const Util_1 = __webpack_require__(4);
 class Dominion extends AbstractApplication_1.default {
     async initialize() {
         this.context().game.cardSet = await this.buildCardSet();
@@ -11062,7 +11310,7 @@ exports.default = Dominion;
 
 
 /***/ }),
-/* 31 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11074,7 +11322,7 @@ exports.default = AbstractApplication;
 
 
 /***/ }),
-/* 32 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11086,11 +11334,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const TurnHandler_1 = __webpack_require__(33);
+const TurnHandler_1 = __webpack_require__(38);
 const DI_1 = __webpack_require__(0);
 class Session {
     async prepare(config) {
         await this.playerHandler().createPlayers(config.playerCount, config.robotCount);
+        await this.marketHandler().initialize();
     }
     async start() {
         while (true) {
@@ -11108,11 +11357,14 @@ class Session {
 __decorate([
     DI_1.default.inject()
 ], Session.prototype, "playerHandler", void 0);
+__decorate([
+    DI_1.default.inject()
+], Session.prototype, "marketHandler", void 0);
 exports.default = Session;
 
 
 /***/ }),
-/* 33 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11124,9 +11376,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CardCategory_1 = __webpack_require__(4);
+const CardCategory_1 = __webpack_require__(2);
 const DI_1 = __webpack_require__(0);
-const CardPicker_1 = __webpack_require__(34);
+const CardPicker_1 = __webpack_require__(39);
 class TurnHandler {
     async start() {
         this.context().turn.initialize();
@@ -11157,7 +11409,7 @@ class TurnHandler {
                 case CardCategory_1.default.Action:
             }
             await this.onStartActionEach();
-            await this.onExcuteAction();
+            await this.onExcuteAction(selectedCard);
             await this.onEndActionEach();
         }
     }
@@ -11171,8 +11423,10 @@ class TurnHandler {
         }
     }
     onStartActionEach() {
+        this.context().turn.actionPoint--;
     }
-    onExcuteAction() {
+    onExcuteAction(card) {
+        card.excute();
     }
     onEndActionEach() {
     }
@@ -11214,13 +11468,13 @@ exports.default = TurnHandler;
 
 
 /***/ }),
-/* 34 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const EventAwaiter_1 = __webpack_require__(35);
+const EventAwaiter_1 = __webpack_require__(40);
 class CardPicker {
     static async itemId(targets) {
         const element = await EventAwaiter_1.default.awaiter({
@@ -11243,7 +11497,7 @@ exports.default = CardPicker;
 
 
 /***/ }),
-/* 35 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11274,17 +11528,17 @@ exports.default = EventAwaiter;
 
 
 /***/ }),
-/* 36 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Util_1 = __webpack_require__(1);
+const Util_1 = __webpack_require__(4);
 class CardSetFactory {
     static async build(cardSetName) {
         try {
-            const targetClass = await __webpack_require__(37)(`./${CardSetFactory.getCardSetName(cardSetName)}`);
+            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(42)(`./${CardSetFactory.getCardSetName(cardSetName)}`); });
             return new targetClass.default;
         }
         catch (e) {
@@ -11302,40 +11556,732 @@ exports.default = CardSetFactory;
 
 
 /***/ }),
-/* 37 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./AbstractCardSet": [
-		5,
-		5
-	],
-	"./AbstractCardSet.ts": [
-		5,
-		5
-	],
-	"./FirstGame": [
-		10,
-		4
-	],
-	"./FirstGame.ts": [
-		10,
-		4
-	]
+	"./AbstractCardSet": 6,
+	"./AbstractCardSet.ts": 6,
+	"./FirstGame": 12,
+	"./FirstGame.ts": 12
 };
-function webpackAsyncContext(req) {
-	var ids = map[req];
-	if(!ids)
-		return Promise.reject(new Error("Cannot find module '" + req + "'."));
-	return __webpack_require__.e(ids[1]).then(function() {
-		return __webpack_require__(ids[0]);
-	});
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
 };
-webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 37;
-module.exports = webpackAsyncContext;
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 42;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const MAX_COUNT = 16;
+const exported = new Set();
+class AvatarFactory {
+    static build() {
+        while (true) {
+            const id = (Math.floor(Math.random() * (MAX_COUNT - 1))) + 1;
+            if (exported.has(id)) {
+                continue;
+            }
+            exported.add(id);
+            return `image/avatar/${id.toString().padStart(2, "0")}.jpg`;
+        }
+    }
+}
+exports.default = AvatarFactory;
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const DI_1 = __webpack_require__(0);
+const vue_1 = __webpack_require__(5);
+const CardFactory_1 = __webpack_require__(22);
+const CardComponent_1 = __webpack_require__(30);
+class MarketHandler {
+    constructor() {
+        this.cards = [];
+        this.trashCards = [];
+        this.view = new vue_1.default({
+            el: "#market",
+            data: {
+                cards: this.cards,
+                kingdomStartIndex: 0,
+            },
+            components: {
+                "card-component": CardComponent_1.default,
+            },
+        });
+        this.trashView = new vue_1.default({
+            el: "#trash",
+            data: {
+                cards: this.trashCards,
+            },
+            components: {
+                "card-component": CardComponent_1.default,
+            },
+        });
+    }
+    async initialize() {
+        for (const [cardId, count] of this.context().game.cardSet.allCards()) {
+            const card = await CardFactory_1.default.build(cardId);
+            this.cards.push({ card, count });
+        }
+        this.view.kingdomStartIndex = this.context().game.cardSet.basicSupplyCards().size;
+    }
+}
+__decorate([
+    DI_1.default.inject()
+], MarketHandler.prototype, "context", void 0);
+exports.default = MarketHandler;
+
+
+/***/ }),
+/* 45 */,
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Silver extends AbstractCard_1.default {
+    value() {
+        return 2;
+    }
+    cardId() {
+        return CardId_1.default.Silver;
+    }
+    name() {
+        return "銀貨";
+    }
+    category() {
+        return CardCategory_1.default.Treasure;
+    }
+    cost() {
+        return 3;
+    }
+    description() {
+        return "[treasure 2]";
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Silver;
+
+
+/***/ }),
+/* 47 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Gold extends AbstractCard_1.default {
+    value() {
+        return 3;
+    }
+    cardId() {
+        return CardId_1.default.Gold;
+    }
+    name() {
+        return "金貨";
+    }
+    category() {
+        return CardCategory_1.default.Treasure;
+    }
+    cost() {
+        return 6;
+    }
+    description() {
+        return "[treasure 2]。";
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Gold;
+
+
+/***/ }),
+/* 49 */,
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Duchy extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Duchy;
+    }
+    name() {
+        return "公領";
+    }
+    category() {
+        return CardCategory_1.default.Victory;
+    }
+    cost() {
+        return 5;
+    }
+    description() {
+        return "[vp 3]。";
+    }
+    victoryPoint() {
+        return 3;
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Duchy;
+
+
+/***/ }),
+/* 51 */,
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+class Province extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Province;
+    }
+    name() {
+        return "属州";
+    }
+    category() {
+        return CardCategory_1.default.Victory;
+    }
+    cost() {
+        return 8;
+    }
+    description() {
+        return "[vp 6]。";
+    }
+    victoryPoint() {
+        return 6;
+    }
+    isKingdomCard() {
+        return false;
+    }
+}
+exports.default = Province;
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Market extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Market;
+    }
+    name() {
+        return "市場";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 5;
+    }
+    description() {
+        return "[turn-card 1][turn-ap 1][turn-bp 1][turn-cp 1]";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            card: 1,
+            action: 1,
+            buy: 1,
+            coin: 1,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Market;
+
+
+/***/ }),
+/* 54 */,
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Militia extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Militia;
+    }
+    name() {
+        return "民兵";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 4;
+    }
+    description() {
+        return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+            ActionCategory_1.default.Attack,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            coin: 2,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Militia;
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Mine extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Mine;
+    }
+    name() {
+        return "鉱山";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 5;
+    }
+    description() {
+        return "あなたの手札の財宝カード１枚を廃棄する。[br]廃棄した財宝よりもコストが最大３コイン多い財宝カード１枚を獲得し、あなたの手札に加える。";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({});
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Mine;
+
+
+/***/ }),
+/* 57 */,
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Moat extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Moat;
+    }
+    name() {
+        return "堀";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 2;
+    }
+    description() {
+        return "[turn-card 2]][line]他のプレイヤーがアタックカードを使用した時、手札からこのカードを公開できる。[br]そうした場合、あなたはそのアタックカードの影響を受けない。";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+            ActionCategory_1.default.Reaction,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            card: 2,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Moat;
+
+
+/***/ }),
+/* 59 */,
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Remodel extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Remodel;
+    }
+    name() {
+        return "改築";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 4;
+    }
+    description() {
+        return "あなたの手札のカード１枚を廃棄する。[br]廃棄したカードよりコストが最大２コイン多いカード１枚を獲得する。";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({});
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Remodel;
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Smithy extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Smithy;
+    }
+    name() {
+        return "鍛冶屋";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 4;
+    }
+    description() {
+        return "[turn-card 3]";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            card: 3,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Smithy;
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Village extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Village;
+    }
+    name() {
+        return "村";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 3;
+    }
+    description() {
+        return "[turn-card 1][turn-ap 2]";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            card: 2,
+            action: 2,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Village;
+
+
+/***/ }),
+/* 63 */,
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Woodcutter extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Woodcutter;
+    }
+    name() {
+        return "木こり";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 3;
+    }
+    description() {
+        return "[turn-bp 1][turn-cp 2]";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            card: 2,
+            coin: 2,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Woodcutter;
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Workshop extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Workshop;
+    }
+    name() {
+        return "工房";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 3;
+    }
+    description() {
+        return "コスト最大４コインまでのカード１枚を獲得する。";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({});
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Workshop;
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractCard_1 = __webpack_require__(3);
+const CardId_1 = __webpack_require__(1);
+const CardCategory_1 = __webpack_require__(2);
+const ActionCategory_1 = __webpack_require__(25);
+const ActionEffectCollection_1 = __webpack_require__(26);
+class Cellar extends AbstractCard_1.default {
+    cardId() {
+        return CardId_1.default.Cellar;
+    }
+    name() {
+        return "地下貯蔵庫";
+    }
+    category() {
+        return CardCategory_1.default.Action;
+    }
+    cost() {
+        return 2;
+    }
+    description() {
+        return "[turn-ap 1]好きな枚数のカードを捨て札にし、同じ枚数のカードを引く。";
+    }
+    actionCategory() {
+        return new Set([
+            ActionCategory_1.default.Action,
+        ]);
+    }
+    effect() {
+        return new ActionEffectCollection_1.default({
+            action: 1,
+        });
+    }
+    isKingdomCard() {
+        return true;
+    }
+    excute() {
+    }
+}
+exports.default = Cellar;
+
 
 /***/ })
 /******/ ]);

@@ -13,8 +13,18 @@
     <div id="content">
       <div id="game">
         <div id="first-column" class="column">
-          <div id="players">
-            <div class="player">
+          <div id="other-players">
+            <div v-for="player in players" v-if="player.isRobot()" class="player">
+              <p>
+                <img :src="player.image()" alt="avatar" class="avatar">
+              </p>
+              <p>
+                <span class="card-count" title="山札の枚数">{{player.getProperty().getHand().length}}</span>
+                <span class="card-count" title="手札の枚数">5</span>
+                <span class="card-count" title="捨て札の枚数">5</span>
+              </p>
+            </div>
+            <!-- <div class="player">
               <p>
                 <img src="image/avatar/09.jpg" alt="avatar" class="avatar">
               </p>
@@ -43,7 +53,7 @@
                 <span class="card-count" title="手札の枚数">5</span>
                 <span class="card-count" title="捨て札の枚数">5</span>
               </p>
-            </div>
+            </div> -->
           </div>
           <div id="information">
             <span>{{text}}</span>
@@ -53,79 +63,109 @@
           </div>
         </div>
         <div id="second-column" class="column">
-          <div id="market">
-            <div id="first-market-column" class="column">
-              <!-- <div class="card">
-                 <img src="image/card/Copper.png" alt="card"/>
+          <div id="market-area">
+            <div id="market">
+              <div id="first-market-column" class="column">
+                <div v-for="cardConfig in cards" v-if="!cardConfig.card.isKingdomCard()">
+                  <card-component :card="cardConfig.card">
+                </div>
+                <!-- <div class="card">
+                  <img src="image/card/Copper.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Silver.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Gold.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Estate.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Duchy.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Province.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Curse.png" alt="card"/>
+                </div> -->
               </div>
-              <div class="card">
-                <img src="image/card/Silver.png" alt="card"/>
+              <div id="second-market-column" class="column">
+                <div v-for="(cardConfig, index) in cards" v-if="cardConfig.card.isKingdomCard() && index >= kingdomStartIndex && index < kingdomStartIndex + 5">
+                  <card-component :card="cardConfig.card">
+                </div>
+                <!-- <div class="card">
+                  <img src="image/card/Cellar.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Market.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Militia.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Mine.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Moat.png" alt="card"/>
+                </div> -->
               </div>
-              <div class="card">
-                <img src="image/card/Gold.png" alt="card"/>
+              <div id="third-market-column" class="column">
+                <div v-for="(cardConfig, index) in cards" v-if="cardConfig.card.isKingdomCard() && index >= kingdomStartIndex + 5">
+                  <card-component :card="cardConfig.card">
+                </div>
+                <!-- <div class="card">
+                  <img src="image/card/Remodel.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Smithy.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Village.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Woodcutter.png" alt="card"/>
+                </div>
+                <div class="card">
+                  <img src="image/card/Workshop.png" alt="card"/>
+                </div> -->
               </div>
-              <div class="card">
-                <img src="image/card/Estate.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Duchy.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Province.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Curse.png" alt="card"/>
-              </div>  -->
             </div>
-            <div id="second-market-column" class="column">
-              <!-- <div class="card">
-                <img src="image/card/Cellar.png" alt="card"/>
+            <div id="me">
+              <div v-for="player in players" v-if="!player.isRobot()" class="player">
+                  <p>
+                    <img :src="player.image()" alt="avatar" class="avatar">
+                  </p>
+                  <p>
+                    <span class="card-count" title="山札の枚数">{{player.getProperty().getHand().length}}</span>
+                    <span class="card-count" title="手札の枚数">5</span>
+                    <span class="card-count" title="捨て札の枚数">5</span>
+                  </p>
               </div>
-              <div class="card">
-                <img src="image/card/Market.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Militia.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Mine.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Moat.png" alt="card"/>
+              <!-- <div class="player">
+                <p>
+                  <img src="image/avatar/01.jpg" alt="avatar" class="avatar">
+                </p>
+                <p>
+                  <span class="card-count" title="山札の枚数">5</span>
+                  <span class="card-count" title="手札の枚数">5</span>
+                  <span class="card-count" title="捨て札の枚数">5</span>
+                </p>
               </div> -->
-            </div>
-            <div id="third-market-column" class="column">
-              <!-- <div class="card">
-                <img src="image/card/Remodel.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Smithy.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Village.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Woodcutter.png" alt="card"/>
-              </div>
-              <div class="card">
-                <img src="image/card/Workshop.png" alt="card"/>
-              </div> -->
-            </div>
-            <div class="player">
-              <p>
-                <img src="image/avatar/01.jpg" alt="avatar" class="avatar">
-              </p>
-              <p>
-                <span class="card-count" title="山札の枚数">5</span>
-                <span class="card-count" title="手札の枚数">5</span>
-                <span class="card-count" title="捨て札の枚数">5</span>
-              </p>
             </div>
             <div id="trash">
               <p>廃棄</p>
-               <div class="card">
-                <img src="image/card/Trash.png" alt="card"/>
-              </div>
+                <template v-if="cards.length === 0">
+                  <div class="card">
+                    <img src="image/card/Trash.png" alt="card"/>
+                  </div>
+                </template>
+                <template v-else>
+                  <div v-for="(card, index) in cards" v-if="index === cards.length - 1">
+                    <card-component :card="card">
+                  </div>
+                </template>
             </div>
           </div>
         </div>

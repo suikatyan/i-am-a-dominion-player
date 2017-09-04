@@ -3,17 +3,17 @@ import Treasure from "interface/card/Treasure";
 import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
 
-export default class Copper extends AbstractCard implements Treasure {
+export default class Silver extends AbstractCard implements Treasure {
   value() {
-    return 1;
+    return 2;
   }
 
   cardId () {
-    return CardId.Copper;
+    return CardId.Silver;
   }
 
   name() {
-    return "銅貨";
+    return "銀貨";
   }
 
   category() {
@@ -21,11 +21,11 @@ export default class Copper extends AbstractCard implements Treasure {
   }
 
   cost() {
-    return 0;
+    return 3;
   }
 
   description() {
-    return "[treasure 1]。";
+    return "[treasure 2]";
   }
 
   isKingdomCard() {

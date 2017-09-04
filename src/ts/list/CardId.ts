@@ -13,7 +13,7 @@ enum CardId {
   Curse = "Curse",
 
   // action
-  Celler = "Celler",
+  Cellar = "Cellar",
   Market = "Market",
   Militia = "Militia",
   Mine = "Mine",
@@ -23,7 +23,6 @@ enum CardId {
   Village = "Village",
   Woodcutter = "Woodcutter",
   Workshop = "Workshop",
-
 }
 
 

@@ -1,14 +1,15 @@
 webpackJsonp([4,5],{
 
 /***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_cardSet_AbstractCardSet__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_list_CardId__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractCardSet_1 = __webpack_require__(5);
-const CardId_1 = __webpack_require__(38);
-class FirstGame extends AbstractCardSet_1.default {
+
+class FirstGame extends __WEBPACK_IMPORTED_MODULE_0_cardSet_AbstractCardSet__["default"] {
     startCards() {
         return super.startCards();
     }
@@ -17,33 +18,32 @@ class FirstGame extends AbstractCardSet_1.default {
     }
     kingdomCards() {
         return new Map([
-            [CardId_1.default.Celler, 10],
-            [CardId_1.default.Market, 10],
-            [CardId_1.default.Woodcutter, 10],
-            [CardId_1.default.Militia, 10],
-            [CardId_1.default.Mine, 10],
-            [CardId_1.default.Moat, 10],
-            [CardId_1.default.Remodel, 10],
-            [CardId_1.default.Smithy, 10],
-            [CardId_1.default.Village, 10],
-            [CardId_1.default.Workshop, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Celler, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Market, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Woodcutter, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Militia, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Mine, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Moat, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Remodel, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Smithy, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Village, 10],
+            [__WEBPACK_IMPORTED_MODULE_1_list_CardId__["a" /* default */].Workshop, 10],
         ]);
     }
     allCards() {
         return super.allCards();
     }
 }
-exports.default = FirstGame;
+/* harmony export (immutable) */ __webpack_exports__["default"] = FirstGame;
+
 
 
 /***/ }),
 
 /***/ 38:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
 var CardId;
 (function (CardId) {
     CardId["Copper"] = "Copper";
@@ -64,36 +64,36 @@ var CardId;
     CardId["Woodcutter"] = "Woodcutter";
     CardId["Workshop"] = "Workshop";
 })(CardId || (CardId = {}));
-exports.default = CardId;
+/* harmony default export */ __webpack_exports__["a"] = (CardId);
 
 
 /***/ }),
 
 /***/ 5:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_list_CardId__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", { value: true });
-const CardId_1 = __webpack_require__(38);
 class AbstractCardSet {
     startCards() {
         return new Map([
-            [CardId_1.default.Copper, 7],
-            [CardId_1.default.Estate, 3],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Copper, 7],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Estate, 3],
         ]);
     }
     basicSupplyCards(playerCount) {
         const victoryCount = playerCount === 2 ? 8 : 12;
         const curseCount = playerCount * 2 - 10;
         return new Map([
-            [CardId_1.default.Copper, 60],
-            [CardId_1.default.Silver, 40],
-            [CardId_1.default.Gold, 30],
-            [CardId_1.default.Estate, victoryCount],
-            [CardId_1.default.Duchy, victoryCount],
-            [CardId_1.default.Province, victoryCount],
-            [CardId_1.default.Curse, curseCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Copper, 60],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Silver, 40],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Gold, 30],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Estate, victoryCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Duchy, victoryCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Province, victoryCount],
+            [__WEBPACK_IMPORTED_MODULE_0_list_CardId__["a" /* default */].Curse, curseCount],
         ]);
     }
     allCards() {
@@ -102,7 +102,8 @@ class AbstractCardSet {
         return new Set(a.concat(b));
     }
 }
-exports.default = AbstractCardSet;
+/* harmony export (immutable) */ __webpack_exports__["default"] = AbstractCardSet;
+
 
 
 /***/ })

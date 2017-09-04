@@ -1,35 +1,31 @@
 import AbstractCard from 'card/AbstractCard';
+import Victory from "interface/card/Victory";
 import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
-import CurseInterface from "interface/card/Curse";
 
-export default class Curse extends AbstractCard implements CurseInterface {
-  value() {
-    return 1;
-  }
-
+export default class Duchy extends AbstractCard implements Victory {
   cardId () {
-    return CardId.Curse;
+    return CardId.Duchy;
   }
 
   name() {
-    return "呪い";
+    return "公領";
   }
 
   category() {
-    return CardCategory.Curse;
+    return CardCategory.Victory;
   }
 
   cost() {
-    return 0;
+    return 5;
   }
 
   description() {
-    return "[vp -1]。";
+    return "[vp 3]。";
   }
 
   victoryPoint() {
-    return -1;
+    return 3;
   }
 
   isKingdomCard() {

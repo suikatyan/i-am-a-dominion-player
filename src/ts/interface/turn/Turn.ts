@@ -1,8 +1,10 @@
+import Action from "interface/card/Action";
+
 export default interface Turn {
   onStartTurn: () => void; // ターン開始
   onStartActionPhase: () => void; // アクションフェーズ開始
   onStartActionEach: () => void; //  アクションカード効果前
-  onExcuteAction: () => void; // 自身のカードが選択されたとき
+  onExcuteAction: (card: Action) => void; // アクションカード効果発動
   onEndActionEach: () => void; // アクションカード効果後
   onEndActionPhase: () => void; // アクションフェーズ終了
   onStartBuyPhase: () => void; // 購入フェーズ開始

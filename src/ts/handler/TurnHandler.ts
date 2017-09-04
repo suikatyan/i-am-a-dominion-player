@@ -4,6 +4,7 @@ import Context from "context/Context";
 import DI from "util/DI";
 import CardPicker from "util/CardPicker";
 import Card from "interface/card/Card";
+import Action from "interface/card/Action";
 import NotificationHandler from "handler/NotificationHandler";
 
 export default class TurnHandler implements Turn {
@@ -49,11 +50,11 @@ export default class TurnHandler implements Turn {
         case CardCategory.Treasure:
           return;
         case CardCategory.Action:
-          // 何もしない
+          // 先に進める
       }
 
       await this.onStartActionEach();
-      await this.onExcuteAction();
+      await this.onExcuteAction(selectedCard as Action);
       await this.onEndActionEach();
     }
   }
@@ -73,11 +74,11 @@ export default class TurnHandler implements Turn {
   }
 
   onStartActionEach() : void {
-
+    this.context().turn.actionPoint--;
   }
 
-  onExcuteAction() : void {
-
+  onExcuteAction(card: Action) : void {
+    card.excute();
   }
 
   onEndActionEach() : void {
