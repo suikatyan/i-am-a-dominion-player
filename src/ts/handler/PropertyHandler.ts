@@ -32,7 +32,17 @@ export default class PropertyHandler {
 
   }
 
+  putDown(cards: Card | Card[]) {
+    if (!Array.isArray(cards)) {
+      cards = [cards]
+    }
+
+    for (const card of cards) {
+      this.field.push(this.hand.removeCard(card.cardId()));
+    }
+  }
+
   getHand() {
-    return this.hand.getCards();
+    return this.hand;
   }
 }

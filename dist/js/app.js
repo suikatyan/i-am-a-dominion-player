@@ -10577,6 +10577,7 @@ class TurnContext {
         this.currentPlayer = currentPlayer;
         this.otherPlayers = this.playerHandler().getOtherPlayers();
         this.hand = currentPlayer.getProperty().getHand();
+        this.propertyHandler = currentPlayer.getProperty();
     }
 }
 __decorate([
@@ -10716,8 +10717,16 @@ class PropertyHandler {
     }
     clean() {
     }
+    putDown(cards) {
+        if (!Array.isArray(cards)) {
+            cards = [cards];
+        }
+        for (const card of cards) {
+            this.field.push(this.hand.removeCard(card.cardId()));
+        }
+    }
     getHand() {
-        return this.hand.getCards();
+        return this.hand;
     }
 }
 exports.default = PropertyHandler;
@@ -10948,6 +10957,10 @@ class Hand {
     }
     getCards() {
         return this.cards;
+    }
+    removeCard(id) {
+        const index = this.cards.findIndex(card => card.cardId() === id);
+        return this.cards.splice(index, 1).pop();
     }
 }
 exports.default = Hand;
@@ -11197,6 +11210,12 @@ class Field {
     constructor() {
         this.cards = [];
     }
+    push(card) {
+        this.cards.push(card);
+    }
+    pushSome(cards) {
+        this.cards.splice(0, 0, ...cards);
+    }
 }
 exports.default = Field;
 
@@ -11379,6 +11398,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CardCategory_1 = __webpack_require__(2);
 const DI_1 = __webpack_require__(0);
 const CardPicker_1 = __webpack_require__(39);
+const CardFilter_1 = __webpack_require__(67);
 class TurnHandler {
     async start() {
         this.context().turn.initialize();
@@ -11404,9 +11424,12 @@ class TurnHandler {
                 case CardCategory_1.default.Curse:
                 case CardCategory_1.default.Victory:
                     continue;
-                case CardCategory_1.default.Treasure:
-                    return;
                 case CardCategory_1.default.Action:
+                    break;
+                case CardCategory_1.default.Treasure:
+                    this.context().turn.propertyHandler.putDown(CardFilter_1.CardFilter.filter(this.context().turn.hand.getCards(), { include: [CardFilter_1.FilterKey.Treasure] }));
+                    console.log(this.context().turn.hand.getCards());
+                    return;
             }
             await this.onStartActionEach();
             await this.onExcuteAction(selectedCard);
@@ -11414,7 +11437,7 @@ class TurnHandler {
         }
     }
     async getSelectedCard() {
-        const result = await CardPicker_1.default.card(this.context().turn.hand, document.querySelectorAll("#hand-cards .card"));
+        const result = await CardPicker_1.default.card(this.context().turn.hand.getCards(), document.querySelectorAll("#hand-cards .card"));
         if (result) {
             return result.card;
         }
@@ -12281,6 +12304,43 @@ class Cellar extends AbstractCard_1.default {
     }
 }
 exports.default = Cellar;
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const CardCategory_1 = __webpack_require__(2);
+var FilterKey;
+(function (FilterKey) {
+    FilterKey["Treasure"] = "Treasure";
+    FilterKey["Victory"] = "Victory";
+    FilterKey["Action"] = "Action";
+    FilterKey["Curse"] = "Curse";
+})(FilterKey = exports.FilterKey || (exports.FilterKey = {}));
+class CardFilter {
+    static filter(cards, keys) {
+        return cards.filter(card => {
+            const exclude = keys.exclude === undefined ? [] : keys.exclude;
+            for (const excludeKey of exclude) {
+                if (card.category() === CardCategory_1.default[excludeKey]) {
+                    return false;
+                }
+            }
+            const include = keys.include === undefined ? [] : keys.include;
+            for (const includeKey of include) {
+                if (card.category() === CardCategory_1.default[includeKey]) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+}
+exports.CardFilter = CardFilter;
 
 
 /***/ })

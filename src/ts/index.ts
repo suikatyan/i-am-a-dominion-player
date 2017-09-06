@@ -6,10 +6,3 @@ import Dominion from "application/Dominion";
   await application.initialize();
   await application.startSession();
 })();
-
-// import CardFactory from "factory/CardFactory";
-// import CardId from "list/CardId";
-
-// (async () => {
-//   console.log(await CardFactory.build(CardId.Celler));
-// })();

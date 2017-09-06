@@ -1,7 +1,8 @@
 import Player from "interface/player/Player";
 import DI from "util/DI";
 import PlayerHandler from 'handler/PlayerHandler';
-import Card from "interface/card/Card";
+import PropertyHandler from 'handler/PropertyHandler';
+import Hand from "property/Hand";
 
 export default class TurnContext {
   @DI.inject()
@@ -11,7 +12,8 @@ export default class TurnContext {
   buyPoint: number;
   currentPlayer: Player;
   otherPlayers: Player[];
-  hand: Card[];
+  hand: Hand;
+  propertyHandler: PropertyHandler;
 
   initialize() {
     const currentPlayer = this.playerHandler().getNextPlayer();
@@ -20,5 +22,6 @@ export default class TurnContext {
     this.currentPlayer = currentPlayer;
     this.otherPlayers = this.playerHandler().getOtherPlayers();
     this.hand = currentPlayer.getProperty().getHand();
+    this.propertyHandler = currentPlayer.getProperty();
   }
 }

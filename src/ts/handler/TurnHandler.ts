@@ -6,6 +6,7 @@ import CardPicker from "util/CardPicker";
 import Card from "interface/card/Card";
 import Action from "interface/card/Action";
 import NotificationHandler from "handler/NotificationHandler";
+import {CardFilter, FilterKey} from "util/CardFilter";
 
 export default class TurnHandler implements Turn {
   @DI.inject()
@@ -47,10 +48,19 @@ export default class TurnHandler implements Turn {
         case CardCategory.Victory:
           // もう一度カードを選択させる
           continue;
-        case CardCategory.Treasure:
-          return;
         case CardCategory.Action:
           // 先に進める
+          break;
+        case CardCategory.Treasure:
+          this.context().turn.propertyHandler.putDown(
+            CardFilter.filter(
+              this.context().turn.hand.getCards(),
+              {include: [FilterKey.Treasure]},
+            ),
+          );
+          console.log(this.context().turn.hand.getCards());
+
+          return;
       }
 
       await this.onStartActionEach();
@@ -61,7 +71,7 @@ export default class TurnHandler implements Turn {
 
   async getSelectedCard() : Promise<Card> {
     const result = await CardPicker.card(
-      this.context().turn.hand,
+      this.context().turn.hand.getCards(),
       document.querySelectorAll("#hand-cards .card"),
     );
 
