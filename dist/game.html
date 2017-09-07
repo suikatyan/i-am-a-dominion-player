@@ -19,9 +19,9 @@
                 <img :src="player.image()" alt="avatar" class="avatar">
               </p>
               <p>
-                <span class="card-count" title="山札の枚数">{{player.getProperty().getHand().getCards().length}}</span>
-                <span class="card-count" title="手札の枚数">5</span>
-                <span class="card-count" title="捨て札の枚数">5</span>
+                <span class="card-count" title="山札の枚数">-</span>
+                <span class="card-count" title="手札の枚数">{{player.getProperty().getHand().getCards().length}}</span>
+                <span class="card-count" title="捨て札の枚数">-</span>
               </p>
             </div>
             <!-- <div class="player">
@@ -56,7 +56,7 @@
             </div> -->
           </div>
           <div id="information">
-            <span>{{text}}</span>
+            <span v-html="text"></span>
           </div>
           <div id="other">
 
@@ -138,9 +138,9 @@
                     <img :src="player.image()" alt="avatar" class="avatar">
                   </p>
                   <p>
-                    <span class="card-count" title="山札の枚数">{{player.getProperty().getHand().getCards().length}}</span>
-                    <span class="card-count" title="手札の枚数">5</span>
-                    <span class="card-count" title="捨て札の枚数">5</span>
+                    <span class="card-count" title="山札の枚数">-</span>
+                    <span class="card-count" title="手札の枚数">{{player.getProperty().getHand().getCards().length}}</span>
+                    <span class="card-count" title="捨て札の枚数">-</span>
                   </p>
               </div>
               <!-- <div class="player">
@@ -190,6 +190,9 @@
             </div>
           </div>
           <div id="field">
+            <div v-for="card in cards" :key="card.itemId()">
+              <card-component :card="card">
+            </div>
             <!-- <div class="card">
               <img src="image/card/Village.png" alt="card"/>
             </div>

@@ -160,6 +160,10 @@ div .card-count {
   margin: 0 5px;
 }
 
+#field{
+  justify-content: left;
+}
+
 #field .card {
   flex-basis: 80px;
   height: auto;

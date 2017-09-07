@@ -16,7 +16,7 @@ export default class TurnHandler implements Turn {
 
   async start() : Promise<void> {
     this.context().turn.initialize();
-    this.notification().say(this.context().turn.currentPlayer.name() + "の番です。");
+    this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
 
     this.onStartTurn();
 
@@ -58,7 +58,6 @@ export default class TurnHandler implements Turn {
               {include: [FilterKey.Treasure]},
             ),
           );
-          console.log(this.context().turn.hand.getCards());
 
           return;
       }
@@ -100,6 +99,7 @@ export default class TurnHandler implements Turn {
   }
 
   async onStartBuyPhase() : Promise<void> {
+    this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
     while(true) {
       if (this.context().turn.actionPoint === 0) {
         return;

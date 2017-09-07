@@ -13,6 +13,10 @@ export default class NotificationHandler {
   }
 
   say(text: string) {
-    this.view.text = text;
+    this.view.text = this.convert(text);
+  }
+
+  convert(text: string) {
+    return text.replace(/\r?\n/g, "<br>");
   }
 }

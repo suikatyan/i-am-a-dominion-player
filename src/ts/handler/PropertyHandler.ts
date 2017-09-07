@@ -38,7 +38,7 @@ export default class PropertyHandler {
     }
 
     for (const card of cards) {
-      this.field.push(this.hand.removeCard(card.cardId()));
+      this.field.push(this.hand.removeCard(card.itemId()));
     }
   }
 

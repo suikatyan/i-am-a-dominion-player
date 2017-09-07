@@ -10722,7 +10722,7 @@ class PropertyHandler {
             cards = [cards];
         }
         for (const card of cards) {
-            this.field.push(this.hand.removeCard(card.cardId()));
+            this.field.push(this.hand.removeCard(card.itemId()));
         }
     }
     getHand() {
@@ -10936,18 +10936,22 @@ exports.default = ActionEffectCollection;
 Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = __webpack_require__(5);
 const CardComponent_1 = __webpack_require__(30);
+let needView = true;
 class Hand {
     constructor() {
         this.cards = [];
-        this.view = new vue_1.default({
-            el: "#hand-cards",
-            data: {
-                cards: this.cards,
-            },
-            components: {
-                "card-component": CardComponent_1.default,
-            },
-        });
+        if (needView) {
+            needView = false;
+            this.view = new vue_1.default({
+                el: "#hand-cards",
+                data: {
+                    cards: this.cards,
+                },
+                components: {
+                    "card-component": CardComponent_1.default,
+                },
+            });
+        }
     }
     push(card) {
         this.cards.push(card);
@@ -10959,7 +10963,7 @@ class Hand {
         return this.cards;
     }
     removeCard(id) {
-        const index = this.cards.findIndex(card => card.cardId() === id);
+        const index = this.cards.findIndex(card => card.itemId() === id);
         return this.cards.splice(index, 1).pop();
     }
 }
@@ -11206,9 +11210,24 @@ exports.default = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const vue_1 = __webpack_require__(5);
+const CardComponent_1 = __webpack_require__(30);
+let view;
 class Field {
     constructor() {
         this.cards = [];
+        if (view === undefined) {
+            view = new vue_1.default({
+                el: "#field",
+                data: {
+                    cards: this.cards,
+                },
+                components: {
+                    "card-component": CardComponent_1.default,
+                },
+            });
+        }
+        this.view = view;
     }
     push(card) {
         this.cards.push(card);
@@ -11276,7 +11295,10 @@ class NotificationHandler {
         });
     }
     say(text) {
-        this.view.text = text;
+        this.view.text = this.convert(text);
+    }
+    convert(text) {
+        return text.replace(/\r?\n/g, "<br>");
     }
 }
 exports.default = NotificationHandler;
@@ -11402,7 +11424,7 @@ const CardFilter_1 = __webpack_require__(67);
 class TurnHandler {
     async start() {
         this.context().turn.initialize();
-        this.notification().say(this.context().turn.currentPlayer.name() + "の番です。");
+        this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
         this.onStartTurn();
         await this.onStartActionPhase();
         this.onEndActionPhase();
@@ -11428,7 +11450,6 @@ class TurnHandler {
                     break;
                 case CardCategory_1.default.Treasure:
                     this.context().turn.propertyHandler.putDown(CardFilter_1.CardFilter.filter(this.context().turn.hand.getCards(), { include: [CardFilter_1.FilterKey.Treasure] }));
-                    console.log(this.context().turn.hand.getCards());
                     return;
             }
             await this.onStartActionEach();
@@ -11456,6 +11477,7 @@ class TurnHandler {
     onEndActionPhase() {
     }
     async onStartBuyPhase() {
+        this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
         while (true) {
             if (this.context().turn.actionPoint === 0) {
                 return;
