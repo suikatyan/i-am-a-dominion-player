@@ -5,6 +5,7 @@ import DI from "util/DI";
 import CardPicker from "util/CardPicker";
 import Card from "interface/card/Card";
 import Action from "interface/card/Action";
+import Treasure from "interface/card/Treasure";
 import NotificationHandler from "handler/NotificationHandler";
 import {CardFilter, FilterKey} from "util/CardFilter";
 
@@ -38,7 +39,7 @@ export default class TurnHandler implements Turn {
 
   async onStartActionPhase() : Promise<void> {
     while (true) {
-      if (this.context().turn.actionPoint <= 0) {
+      if (this.context().turn.turnPointHandler.action.get() <= 0) {
         return;
       }
 
@@ -83,7 +84,7 @@ export default class TurnHandler implements Turn {
   }
 
   onStartActionEach() : void {
-    this.context().turn.actionPoint--;
+    this.context().turn.turnPointHandler.action.decrease();
   }
 
   onExcuteAction(card: Action) : void {
@@ -101,7 +102,8 @@ export default class TurnHandler implements Turn {
   async onStartBuyPhase() : Promise<void> {
     this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
     while(true) {
-      if (this.context().turn.actionPoint === 0) {
+      this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
+      if (this.context().turn.turnPointHandler.action.get() === 0) {
         return;
       }
 
@@ -110,6 +112,24 @@ export default class TurnHandler implements Turn {
       await this.onBuyCard();
       await this.onEndBuyEach();
     }
+  }
+
+  async getSelectedBuyCard() : Promise<Card> {
+
+  }
+
+  calculateCoinPoint() : number {
+    const field = this.context().turn.propertyHandler.getField();
+    return field.getCards().reduce((previous, current) => {
+      switch (current.category()) {
+        case CardCategory.Treasure:
+          return previous + (<Treasure> current).value();
+        case CardCategory.Action:
+          return previous + (<Action> current).effect().coin();
+      }
+
+      return 0;
+    }, 0);
   }
 
   onStartBuyEach() : void {

@@ -45,4 +45,8 @@ export default class PropertyHandler {
   getHand() {
     return this.hand;
   }
+
+  getField() {
+    return this.field;
+  }
 }

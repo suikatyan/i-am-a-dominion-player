@@ -10569,14 +10569,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const DI_1 = __webpack_require__(0);
+const TurnPointHandler_1 = __webpack_require__(68);
 class TurnContext {
     initialize() {
         const currentPlayer = this.playerHandler().getNextPlayer();
-        this.actionPoint = 1;
-        this.buyPoint = 1;
+        this.turnPointHandler = new TurnPointHandler_1.default();
         this.currentPlayer = currentPlayer;
         this.otherPlayers = this.playerHandler().getOtherPlayers();
         this.hand = currentPlayer.getProperty().getHand();
+        this.field = currentPlayer.getProperty().getField();
         this.propertyHandler = currentPlayer.getProperty();
     }
 }
@@ -10727,6 +10728,9 @@ class PropertyHandler {
     }
     getHand() {
         return this.hand;
+    }
+    getField() {
+        return this.field;
     }
 }
 exports.default = PropertyHandler;
@@ -10912,16 +10916,16 @@ class ActionEffectCollection {
         this._coin = coin;
     }
     action() {
-        return this.action;
+        return this._action;
     }
     buy() {
-        return this.buy;
+        return this._buy;
     }
     card() {
-        return this.card;
+        return this._card;
     }
     coin() {
-        return this.coin;
+        return this._coin;
     }
 }
 exports.default = ActionEffectCollection;
@@ -11235,6 +11239,9 @@ class Field {
     pushSome(cards) {
         this.cards.splice(0, 0, ...cards);
     }
+    getCards() {
+        return this.cards;
+    }
 }
 exports.default = Field;
 
@@ -11438,7 +11445,7 @@ class TurnHandler {
     }
     async onStartActionPhase() {
         while (true) {
-            if (this.context().turn.actionPoint <= 0) {
+            if (this.context().turn.turnPointHandler.action.get() <= 0) {
                 return;
             }
             const selectedCard = await this.getSelectedCard();
@@ -11467,7 +11474,7 @@ class TurnHandler {
         }
     }
     onStartActionEach() {
-        this.context().turn.actionPoint--;
+        this.context().turn.turnPointHandler.action.decrease();
     }
     onExcuteAction(card) {
         card.excute();
@@ -11479,7 +11486,8 @@ class TurnHandler {
     async onStartBuyPhase() {
         this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
         while (true) {
-            if (this.context().turn.actionPoint === 0) {
+            this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
+            if (this.context().turn.turnPointHandler.action.get() === 0) {
                 return;
             }
             const selectedBuyCard = await this.getSelectedBuyCard();
@@ -11487,6 +11495,20 @@ class TurnHandler {
             await this.onBuyCard();
             await this.onEndBuyEach();
         }
+    }
+    async getSelectedBuyCard() {
+    }
+    calculateCoinPoint() {
+        const field = this.context().turn.propertyHandler.getField();
+        return field.getCards().reduce((previous, current) => {
+            switch (current.category()) {
+                case CardCategory_1.default.Treasure:
+                    return previous + current.value();
+                case CardCategory_1.default.Action:
+                    return previous + current.effect().coin();
+            }
+            return 0;
+        }, 0);
     }
     onStartBuyEach() {
     }
@@ -12363,6 +12385,53 @@ class CardFilter {
     }
 }
 exports.CardFilter = CardFilter;
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const vue_1 = __webpack_require__(5);
+class TurnPoint {
+    constructor(number = 1) {
+        this.point = number;
+    }
+    get() {
+        return this.point;
+    }
+    set(number) {
+        this.point = number;
+    }
+    increase(count = 1) {
+        this.point += count;
+    }
+    decrease(count = 1) {
+        this.point -= count;
+    }
+}
+let needView = true;
+class TurnPointHandler {
+    constructor() {
+        this.action = new TurnPoint();
+        this.buy = new TurnPoint();
+        this.coin = new TurnPoint(0);
+        if (needView) {
+            needView = false;
+            this.view = new vue_1.default({
+                el: "#points",
+                data: {
+                    actionPoint: this.action.get(),
+                    buyPoint: this.buy.get(),
+                    coinPoint: this.coin.get(),
+                },
+            });
+        }
+    }
+}
+exports.default = TurnPointHandler;
 
 
 /***/ })

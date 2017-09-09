@@ -30,4 +30,8 @@ export default class Field {
   pushSome(cards: Card[]) : void {
     this.cards.splice(0, 0, ...cards);
   }
+
+  getCards() {
+    return this.cards;
+  }
 }

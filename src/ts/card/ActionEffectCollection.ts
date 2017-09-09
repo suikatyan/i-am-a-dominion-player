@@ -19,19 +19,19 @@ export default class ActionEffectCollection {
     this._coin = coin;
   }
 
-  action() {
-    return this.action;
+  action() : number {
+    return this._action;
   }
 
-  buy() {
-    return this.buy;
+  buy() : number {
+    return this._buy;
   }
 
-  card() {
-    return this.card;
+  card() : number {
+    return this._card;
   }
 
-  coin() {
-  return this.coin;
+  coin() : number {
+    return this._coin;
   }
 }
