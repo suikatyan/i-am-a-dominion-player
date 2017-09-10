@@ -1,7 +1,7 @@
 import Vue from "vue";
 
 class TurnPoint {
-  private point: number;
+  point: number;
 
   constructor(number: number = 1) {
     this.point = number;
@@ -24,13 +24,13 @@ class TurnPoint {
   }
 }
 
-
 let needView = true;
 
 export default class TurnPointHandler {
   action = new TurnPoint();
   buy = new TurnPoint();
   coin = new TurnPoint(0);
+  usedCoin = new TurnPoint(0);
   private view: Vue;
 
   constructor() {
@@ -39,9 +39,9 @@ export default class TurnPointHandler {
       this.view = new Vue({
         el: "#points",
         data: {
-          actionPoint: this.action.get(),
-          buyPoint: this.buy.get(),
-          coinPoint: this.coin.get(),
+          actionPoint: this.action,
+          buyPoint: this.buy,
+          coinPoint: this.coin,
         },
       });
     }

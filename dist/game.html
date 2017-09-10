@@ -19,9 +19,9 @@
                 <img :src="player.image()" alt="avatar" class="avatar">
               </p>
               <p>
-                <span class="card-count" title="山札の枚数">-</span>
-                <span class="card-count" title="手札の枚数">{{player.getProperty().getHand().getCards().length}}</span>
-                <span class="card-count" title="捨て札の枚数">-</span>
+                <span class="card-count" title="山札の枚数">{{player.getProperty().getDeck().count()}}</span>
+                <span class="card-count" title="手札の枚数">{{player.getProperty().getHand().count()}}</span>
+                <span class="card-count" title="捨て札の枚数">{{player.getProperty().getDiscarded().count()}}</span>
               </p>
             </div>
             <!-- <div class="player">
@@ -138,9 +138,9 @@
                     <img :src="player.image()" alt="avatar" class="avatar">
                   </p>
                   <p>
-                    <span class="card-count" title="山札の枚数">-</span>
-                    <span class="card-count" title="手札の枚数">{{player.getProperty().getHand().getCards().length}}</span>
-                    <span class="card-count" title="捨て札の枚数">-</span>
+                    <span class="card-count" title="山札の枚数">{{player.getProperty().getDeck().count()}}</span>
+                    <span class="card-count" title="手札の枚数">{{player.getProperty().getHand().count()}}</span>
+                    <span class="card-count" title="捨て札の枚数">{{player.getProperty().getDiscarded().count()}}</span>
                   </p>
               </div>
               <!-- <div class="player">
@@ -173,15 +173,15 @@
           <div id="actions-wrapper">
             <div id="points">
               <div>
-                <span id="action-point">{{actionPoint}}</span><br>
+                <span id="action-point">{{actionPoint.get()}}</span><br>
                 アクション
               </div>
               <div>
-                <span id="buy-point">{{buyPoint}}</span><br>
+                <span id="buy-point">{{buyPoint.get()}}</span><br>
                 購入
               </div>
               <div>
-                <span id="coin-point">{{coinPoint}}</span><br>
+                <span id="coin-point">{{coinPoint.get()}}</span><br>
                 コイン
               </div>
             </div>

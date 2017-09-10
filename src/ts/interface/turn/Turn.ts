@@ -9,7 +9,7 @@ export default interface Turn {
   onEndActionPhase: () => void; // アクションフェーズ終了
   onStartBuyPhase: () => void; // 購入フェーズ開始
   onStartBuyEach: () => void; // 購入前
-  onBuyCard: () => void; // 購入カードを選択したとき
+  onBuyCard: (card: Action) => void; // 購入カードを選択したとき
   onEndBuyEach: () => void; // 購入後
   onEndBuyPhase: () => void; // 購入フェーズ終了
   onStartClean: () => void; // 片付けフェーズ開始

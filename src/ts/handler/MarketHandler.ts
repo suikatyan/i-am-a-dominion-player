@@ -1,22 +1,28 @@
 import Card from "interface/card/Card";
+import CardId from "list/CardId";
 import Context from "context/Context";
 import DI from "util/DI";
 import Vue from "vue";
 import CardFactory from "factory/CardFactory";
 import CardComponent from "component/CardComponent";
+import CardWithCountComponent from "component/CardWithCountComponent";
 
-interface marketCard {
+interface MarketCard {
   count: number,
   card: Card,
 }
 
 export default class MarketHandler {
-  private cards: marketCard[] = [];
+  private cards: MarketCard[] = [];
   private trashCards: Card[] = [];
   @DI.inject()
   private context: () => Context;
   private view: Vue;
   private trashView: Vue;
+
+  static querySelectorAll() {
+    return document.querySelectorAll("#market .card");
+  }
 
   constructor() {
     this.view = new Vue({
@@ -26,7 +32,7 @@ export default class MarketHandler {
         kingdomStartIndex: 0,
       },
       components: {
-        "card-component": CardComponent,
+        "card-component": CardWithCountComponent,
       },
     });
     this.trashView = new Vue({
@@ -46,5 +52,19 @@ export default class MarketHandler {
       this.cards.push({card, count});
     }
     this.view.kingdomStartIndex = this.context().game.cardSet.basicSupplyCards().size;
+  }
+
+  getMarketCards() {
+    return this.cards;
+  }
+
+  async deal(cardId: CardId) {
+    for (let i = 0; i < this.cards.length; i++) {
+      if (this.cards[i].card.cardId() === cardId) {
+        this.cards[i].count--;
+      }
+    }
+
+    return await CardFactory.build(cardId);
   }
 }

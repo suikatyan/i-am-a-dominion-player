@@ -81,7 +81,7 @@ div .card-count {
 
 #market-area .card {
   height: 103px;
-  margin: 0 10px;
+  /* margin: 0 10px; */
   flex-basis: 82px;
 }
 
@@ -172,6 +172,12 @@ div .card-count {
 
 .card {
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.49);
+}
+
+.market-card-count {
+  position: relative;
+  left: -30px;
+  bottom: 5px;
 }
 
 /* .card:hover {

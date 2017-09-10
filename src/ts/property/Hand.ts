@@ -8,6 +8,10 @@ export default class Hand {
   private cards: Card[] = [];
   private view: Vue;
 
+  static querySelectorAll() {
+    return document.querySelectorAll("#hand-cards .card");
+  }
+
   constructor() {
     if (needView) {
       needView = false;
@@ -33,6 +37,10 @@ export default class Hand {
 
   getCards() {
     return this.cards;
+  }
+
+  count() : number {
+    return this.cards.length;
   }
 
   removeCard(id: string) : Card {

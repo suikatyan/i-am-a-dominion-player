@@ -4,6 +4,8 @@ import PlayerHandler from 'handler/PlayerHandler';
 import PropertyHandler from 'handler/PropertyHandler';
 import Hand from "property/Hand";
 import Field from "property/Field";
+import Deck from "property/Deck";
+import Discarded from "property/Discarded";
 import TurnPointHandler from "handler/TurnPointHandler";
 
 export default class TurnContext {
@@ -15,6 +17,8 @@ export default class TurnContext {
   otherPlayers: Player[];
   hand: Hand;
   field: Field;
+  deck: Deck;
+  discarded: Discarded;
   propertyHandler: PropertyHandler;
 
   initialize() {
@@ -24,6 +28,8 @@ export default class TurnContext {
     this.otherPlayers = this.playerHandler().getOtherPlayers();
     this.hand = currentPlayer.getProperty().getHand();
     this.field = currentPlayer.getProperty().getField();
+    this.deck = currentPlayer.getProperty().getDeck();
+    this.discarded = currentPlayer.getProperty().getDiscarded();
     this.propertyHandler = currentPlayer.getProperty();
   }
 }

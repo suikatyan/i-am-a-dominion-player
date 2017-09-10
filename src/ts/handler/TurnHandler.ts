@@ -6,7 +6,9 @@ import CardPicker from "util/CardPicker";
 import Card from "interface/card/Card";
 import Action from "interface/card/Action";
 import Treasure from "interface/card/Treasure";
+import Hand from "property/Hand";
 import NotificationHandler from "handler/NotificationHandler";
+import MarketHandler from "handler/MarketHandler";
 import {CardFilter, FilterKey} from "util/CardFilter";
 
 export default class TurnHandler implements Turn {
@@ -14,6 +16,8 @@ export default class TurnHandler implements Turn {
   private context: () => Context;
   @DI.inject()
   private notification: () => NotificationHandler;
+  @DI.inject()
+  private marketHandler: () => MarketHandler;
 
   async start() : Promise<void> {
     this.context().turn.initialize();
@@ -24,7 +28,7 @@ export default class TurnHandler implements Turn {
     await this.onStartActionPhase();
     this.onEndActionPhase();
 
-    this.onStartBuyPhase();
+    await this.onStartBuyPhase();
     this.onEndBuyPhase();
 
     this.onStartClean();
@@ -72,7 +76,7 @@ export default class TurnHandler implements Turn {
   async getSelectedCard() : Promise<Card> {
     const result = await CardPicker.card(
       this.context().turn.hand.getCards(),
-      document.querySelectorAll("#hand-cards .card"),
+      Hand.querySelectorAll(),
     );
 
     if (result) {
@@ -101,21 +105,36 @@ export default class TurnHandler implements Turn {
 
   async onStartBuyPhase() : Promise<void> {
     this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
+    this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
     while(true) {
-      this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
-      if (this.context().turn.turnPointHandler.action.get() === 0) {
+      if (this.context().turn.turnPointHandler.buy.get() === 0) {
         return;
       }
 
       const selectedBuyCard = await this.getSelectedBuyCard();
       await this.onStartBuyEach();
-      await this.onBuyCard();
+      await this.onBuyCard(selectedBuyCard);
       await this.onEndBuyEach();
     }
   }
 
   async getSelectedBuyCard() : Promise<Card> {
+    const result = await CardPicker.card(
+      this.marketHandler().getMarketCards().map((item) => item.card),
+      MarketHandler.querySelectorAll(),
+    );
 
+    if (result === null) {
+      throw new Error();
+    }
+
+    while (true) {
+      if (result.card.cost() <= this.context().turn.turnPointHandler.coin.get()) {
+        this.context().turn.turnPointHandler.usedCoin.increase(result.card.cost());
+        return result.card;
+      }
+      return await this.getSelectedBuyCard();
+    }
   }
 
   calculateCoinPoint() : number {
@@ -129,19 +148,19 @@ export default class TurnHandler implements Turn {
       }
 
       return 0;
-    }, 0);
+    }, this.context().turn.turnPointHandler.usedCoin.get() * -1);
   }
 
   onStartBuyEach() : void {
-
+    this.context().turn.turnPointHandler.buy.decrease();
   }
 
-  onBuyCard() : void {
-
+  async onBuyCard(card: Card) : Promise<void> {
+    this.context().turn.discarded.push(await this.marketHandler().deal(card.cardId()));
   }
 
   onEndBuyEach() : void {
-
+    this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
   }
 
   onEndBuyPhase() : void {

@@ -49,4 +49,12 @@ export default class PropertyHandler {
   getField() {
     return this.field;
   }
+
+  getDeck() {
+    return this.deck;
+  }
+
+  getDiscarded() {
+    return this.discarded;
+  }
 }
