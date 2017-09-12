@@ -21,4 +21,22 @@ export default class CardPicker {
 
     return null;
   }
+
+  static async cardAndButton(cards: Card[], targets: any) : Promise<{index: number, card: Card} | null | false> {
+    targets = Array.from(targets);
+    targets.push(document.querySelector("#end-button"));
+    const itemId =  await this.itemId(targets);
+    
+    if (itemId === "end-button") {
+      return false;
+    }
+
+    for (const [index, card] of cards.entries()) {
+      if (itemId === card.itemId()) {
+        return {index, card};
+      }
+    }
+
+    return null;
+  }
 }

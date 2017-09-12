@@ -1,6 +1,11 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="Author" content="suikatyan">
+    <meta name="description" content="I am a Dominion playerはカードゲーム『Dominion』をブラウザ上で遊べるようにしたサイトです。">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <!-- <link rel="icon" href="/icon/favicon.ico"> -->
     <title>I am a Dominion player</title>
     <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
@@ -24,36 +29,6 @@
                 <span class="card-count" title="捨て札の枚数">{{player.getProperty().getDiscarded().count()}}</span>
               </p>
             </div>
-            <!-- <div class="player">
-              <p>
-                <img src="image/avatar/09.jpg" alt="avatar" class="avatar">
-              </p>
-              <p>
-                <span class="card-count" title="山札の枚数">5</span>
-                <span class="card-count" title="手札の枚数">5</span>
-                <span class="card-count" title="捨て札の枚数">5</span>
-              </p>
-            </div>
-            <div class="player">
-              <p>
-                <img src="image/avatar/10.jpg" alt="avatar" class="avatar">
-              </p>
-              <p>
-                <span class="card-count" title="山札の枚数">5</span>
-                <span class="card-count" title="手札の枚数">5</span>
-                <span class="card-count" title="捨て札の枚数">5</span>
-              </p>
-            </div>
-            <div class="player">
-              <p>
-                <img src="image/avatar/12.jpg" alt="avatar" class="avatar">
-              </p>
-              <p>
-                <span class="card-count" title="山札の枚数">5</span>
-                <span class="card-count" title="手札の枚数">5</span>
-                <span class="card-count" title="捨て札の枚数">5</span>
-              </p>
-            </div> -->
           </div>
           <div id="information">
             <span v-html="text"></span>
@@ -67,69 +42,18 @@
             <div id="market">
               <div id="first-market-column" class="column">
                 <div v-for="cardConfig in cards" v-if="!cardConfig.card.isKingdomCard()">
-                  <card-component :card="cardConfig.card">
+                  <card-component :card="cardConfig.card" :count="cardConfig.count">
                 </div>
-                <!-- <div class="card">
-                  <img src="image/card/Copper.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Silver.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Gold.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Estate.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Duchy.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Province.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Curse.png" alt="card"/>
-                </div> -->
               </div>
               <div id="second-market-column" class="column">
                 <div v-for="(cardConfig, index) in cards" v-if="cardConfig.card.isKingdomCard() && index >= kingdomStartIndex && index < kingdomStartIndex + 5">
-                  <card-component :card="cardConfig.card">
+                  <card-component :card="cardConfig.card" :count="cardConfig.count">
                 </div>
-                <!-- <div class="card">
-                  <img src="image/card/Cellar.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Market.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Militia.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Mine.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Moat.png" alt="card"/>
-                </div> -->
               </div>
               <div id="third-market-column" class="column">
                 <div v-for="(cardConfig, index) in cards" v-if="cardConfig.card.isKingdomCard() && index >= kingdomStartIndex + 5">
-                  <card-component :card="cardConfig.card">
+                  <card-component :card="cardConfig.card" :count="cardConfig.count">
                 </div>
-                <!-- <div class="card">
-                  <img src="image/card/Remodel.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Smithy.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Village.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Woodcutter.png" alt="card"/>
-                </div>
-                <div class="card">
-                  <img src="image/card/Workshop.png" alt="card"/>
-                </div> -->
               </div>
             </div>
             <div id="me">
@@ -143,16 +67,6 @@
                     <span class="card-count" title="捨て札の枚数">{{player.getProperty().getDiscarded().count()}}</span>
                   </p>
               </div>
-              <!-- <div class="player">
-                <p>
-                  <img src="image/avatar/01.jpg" alt="avatar" class="avatar">
-                </p>
-                <p>
-                  <span class="card-count" title="山札の枚数">5</span>
-                  <span class="card-count" title="手札の枚数">5</span>
-                  <span class="card-count" title="捨て札の枚数">5</span>
-                </p>
-              </div> -->
             </div>
             <div id="trash">
               <p>廃棄</p>
@@ -186,25 +100,13 @@
               </div>
             </div>
             <div id="end-wrapper">
-              <button id="end-button">ターンを終了する</button>
+              <button id="end-button" data-item-id="end-button">ターンを終了する</button>
             </div>
           </div>
           <div id="field">
             <div v-for="card in cards" :key="card.itemId()">
               <card-component :card="card">
             </div>
-            <!-- <div class="card">
-              <img src="image/card/Village.png" alt="card"/>
-            </div>
-            <div class="card">
-              <img src="image/card/Thief.png" alt="card"/>
-            </div>
-            <div class="card">
-              <img src="image/card/Smithy.png" alt="card"/>
-            </div>
-            <div class="card">
-              <img src="image/card/Witch.png" alt="card"/>
-            </div> -->
           </div>
         </div>
         <div id="fourth-column" class="column">

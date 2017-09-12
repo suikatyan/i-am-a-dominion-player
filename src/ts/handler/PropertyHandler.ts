@@ -17,19 +17,32 @@ export default class PropertyHandler {
   }
 
   draw(count = 1) : void {
-    let cards: Card[];
+    let cards: Card[] = [];
     if (this.deck.count() >= count) {
       cards = this.deck.popSome(count);
     } else {
-      cards = this.deck.popSome(this.deck.count());
-
+      while (true) {
+        if (this.discarded.count() === 0) {
+          break;
+        }
+        cards = this.deck.popSome(this.deck.count());
+        this.rebornDeck();
+        cards.push(...this.deck.popSome(count - cards.length));
+      }
     }
 
     this.hand.pushSome(cards);
   }
 
   clean() {
+    this.discarded.pushSome(this.hand.removeAllCard());
+    this.discarded.pushSome(this.field.removeAllCard());
+    this.draw(5);
+  }
 
+  rebornDeck() {
+    this.deck.pushSome(this.discarded.removeAllCard());
+    this.deck.shuffle();
   }
 
   putDown(cards: Card | Card[]) {

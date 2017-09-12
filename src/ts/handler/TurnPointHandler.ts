@@ -1,9 +1,11 @@
 import Vue from "vue";
 
 class TurnPoint {
-  point: number;
+  private point: number;
+  private defaultPoint: number;
 
   constructor(number: number = 1) {
+    this.defaultPoint = number;
     this.point = number;
   }
 
@@ -22,28 +24,46 @@ class TurnPoint {
   decrease(count = 1) {
     this.point -= count;
   }
+
+  initialize() {
+    this.point = this.defaultPoint;
+  }
 }
 
-let needView = true;
+const actionPoint = new TurnPoint();
+const buyPoint = new TurnPoint();
+const coinPoint = new TurnPoint(0);
+const usedCoin = new TurnPoint(0);
+
+const view = new Vue({
+  el: "#points",
+  data: {
+    actionPoint,
+    buyPoint,
+    coinPoint,
+  },
+});
 
 export default class TurnPointHandler {
-  action = new TurnPoint();
-  buy = new TurnPoint();
-  coin = new TurnPoint(0);
-  usedCoin = new TurnPoint(0);
+  action: TurnPoint;
+  buy: TurnPoint;
+  coin: TurnPoint;
+  usedCoin: TurnPoint;
   private view: Vue;
 
   constructor() {
-    if (needView) {
-      needView = false;
-      this.view = new Vue({
-        el: "#points",
-        data: {
-          actionPoint: this.action,
-          buyPoint: this.buy,
-          coinPoint: this.coin,
-        },
-      });
-    }
+    this.view = view;
+
+    this.action = actionPoint;
+    this.action.initialize();
+
+    this.buy = buyPoint;
+    this.buy.initialize();
+
+    this.coin = coinPoint;
+    this.coin.initialize();
+
+    this.usedCoin = usedCoin;
+    this.usedCoin.initialize();
   }
 }

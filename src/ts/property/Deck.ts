@@ -29,6 +29,14 @@ export default class Deck {
     return this.cards.splice(0, count);
   }
 
+  push(card: Card) : void {
+    this.cards.push(card);
+  }
+
+  pushSome(cards: Card[]) : void {
+    this.cards.splice(0, 0, ...cards);
+  }
+
   count() : number {
     return this.cards.length;
   }

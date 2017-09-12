@@ -21,12 +21,13 @@ export default class Session {
 
   async start() {
     while (true) {
-      const turn = new TurnHandler();
-      await turn.start();
-
-      if (this.canContinue()) {
+      if (!this.canContinue()) {
         break;
       }
+
+      this.playerHandler().next();
+      const turn = new TurnHandler();
+      await turn.start();
     }
   }
 

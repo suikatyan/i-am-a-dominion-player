@@ -14,4 +14,8 @@ export default class Discarded {
   pushSome(cards: Card[]) : void {
     this.cards.splice(0, 0, ...cards);
   }
+
+  removeAllCard() {
+    return this.cards.splice(0, this.cards.length);
+  }
 }

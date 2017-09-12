@@ -1,6 +1,9 @@
 import CardId from "list/CardId";
 import PlayerHandler from 'handler/PlayerHandler';
 import DI from "util/DI";
+import CardFactory from "factory/CardFactory";
+import Card from "interface/card/Card";
+import CardSorter from "util/CardSorter";
 
 export default abstract class AbstractCardSet {
   @DI.inject()
@@ -16,7 +19,7 @@ export default abstract class AbstractCardSet {
   basicSupplyCards() : Map<CardId, number> {
     const playerCount = this.playerHandler().count();
     const victoryCount = playerCount === 2 ? 8 : 12;
-    const curseCount = playerCount * 2 - 10;
+    const curseCount = playerCount * 10 - 10;
 
     return new Map([
       [CardId.Copper,   60],
@@ -29,11 +32,24 @@ export default abstract class AbstractCardSet {
     ]);
   }
 
-  abstract kingdomCards() : Map<CardId, number>;
+  abstract async kingdomCards() : Promise<Map<CardId, number>>;
 
-  allCards() : Map<CardId, number> {
+  async allCards() : Promise<Map<CardId, number>> {
     const a = Array.from(this.basicSupplyCards());
-    const b = Array.from(this.kingdomCards());
+    const b = Array.from(await this.kingdomCards());
     return new Map(a.concat(b));
+  }
+
+  protected async sort(cards: [CardId, number][]) {
+    const builtCards: Card[] = [];
+    for (const [cardId] of cards) {
+      builtCards.push(await CardFactory.build(cardId));
+    }
+
+    CardSorter.sort(builtCards, {isAscending: true, keys: ["cost"]});
+
+    return builtCards.map((builtCard) => {
+      return cards.find(([cardId]) => builtCard.cardId() === cardId);
+    }) as [CardId, number][];
   }
 }

@@ -34,4 +34,8 @@ export default class Field {
   getCards() {
     return this.cards;
   }
+
+  removeAllCard() {
+    return this.cards.splice(0, this.cards.length);
+  }
 }

@@ -38,12 +38,14 @@ export default class PlayerHandler {
     }
   }
 
-  getNextPlayer() {
+  next() {
     this.currentPlayerIndex++;
     if (this.players.length <= this.currentPlayerIndex) {
       this.currentPlayerIndex = 0;
     }
+  }
 
+  getCurrentPlayer() {
     return this.players[this.currentPlayerIndex];
   }
 

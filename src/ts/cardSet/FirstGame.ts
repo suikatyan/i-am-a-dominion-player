@@ -3,8 +3,8 @@ import CardSet from "interface/cardSet/CardSet";
 import CardId from "list/CardId";
 
 export default class FirstGame extends AbstractCardSet implements CardSet {
-  kingdomCards() : Map<CardId, number> {
-    return new Map([
+  async kingdomCards() {
+    const cards = await this.sort([
       [CardId.Cellar,     10],
       [CardId.Market,     10],
       [CardId.Woodcutter, 10],
@@ -16,5 +16,7 @@ export default class FirstGame extends AbstractCardSet implements CardSet {
       [CardId.Village,    10],
       [CardId.Workshop,   10],
     ]);
+
+    return new Map(cards);
   }
 }

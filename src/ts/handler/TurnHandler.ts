@@ -25,13 +25,16 @@ export default class TurnHandler implements Turn {
 
     this.onStartTurn();
 
-    await this.onStartActionPhase();
+    const canContinue = await this.onStartActionPhase();
     this.onEndActionPhase();
 
-    await this.onStartBuyPhase();
-    this.onEndBuyPhase();
+    if (canContinue) {
+      await this.onStartBuyPhase();
+      this.onEndBuyPhase();
+    }
 
     this.onStartClean();
+    this.onClean();
     this.onEndClean();
 
     this.onEndTurn();
@@ -41,13 +44,17 @@ export default class TurnHandler implements Turn {
 
   }
 
-  async onStartActionPhase() : Promise<void> {
+  async onStartActionPhase() : Promise<boolean> {
     while (true) {
       if (this.context().turn.turnPointHandler.action.get() <= 0) {
-        return;
+        return true;
       }
 
-      const selectedCard = await this.getSelectedCard();
+      const selectedCard = await this.getActionSelectedCard();
+      if (!selectedCard) {
+        return false;
+      }
+
       switch (selectedCard.category()) {
         case CardCategory.Curse:
         case CardCategory.Victory:
@@ -64,27 +71,37 @@ export default class TurnHandler implements Turn {
             ),
           );
 
-          return;
+          return true;
       }
 
       await this.onStartActionEach();
       await this.onExcuteAction(selectedCard as Action);
       await this.onEndActionEach();
+
+      return true;
     }
   }
 
-  async getSelectedCard() : Promise<Card> {
-    const result = await CardPicker.card(
+  async getActionSelectedCard() : Promise<Card | void> {
+    if (this.context().turn.currentPlayer.isRobot()) {
+      return;
+      // return this.context().turn.currentPlayer.getActionSelectedCard();
+    }
+
+    const result = await CardPicker.cardAndButton(
       this.context().turn.hand.getCards(),
       Hand.querySelectorAll(),
     );
 
-    if (result) {
-      return result.card;
-    } else {
+    if (result === null) {
       throw new Error();
     }
 
+    if (!result) {
+      return;
+    }
+
+    return result.card;
   }
 
   onStartActionEach() : void {
@@ -103,23 +120,33 @@ export default class TurnHandler implements Turn {
 
   }
 
-  async onStartBuyPhase() : Promise<void> {
+  async onStartBuyPhase() : Promise<boolean> {
     this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
     this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
     while(true) {
       if (this.context().turn.turnPointHandler.buy.get() === 0) {
-        return;
+        return false;
       }
 
       const selectedBuyCard = await this.getSelectedBuyCard();
+      if (!selectedBuyCard) {
+        return false;
+      }
       await this.onStartBuyEach();
       await this.onBuyCard(selectedBuyCard);
       await this.onEndBuyEach();
+
+      return true;
     }
   }
 
-  async getSelectedBuyCard() : Promise<Card> {
-    const result = await CardPicker.card(
+  async getSelectedBuyCard() : Promise<Card | void> {
+    if (this.context().turn.currentPlayer.isRobot()) {
+      return;
+      // return this.context().turn.currentPlayer.getSelectedBuyCard();
+    }
+
+    const result = await CardPicker.cardAndButton(
       this.marketHandler().getMarketCards().map((item) => item.card),
       MarketHandler.querySelectorAll(),
     );
@@ -128,11 +155,20 @@ export default class TurnHandler implements Turn {
       throw new Error();
     }
 
+    if (!result) {
+      return;
+    }
+
     while (true) {
-      if (result.card.cost() <= this.context().turn.turnPointHandler.coin.get()) {
+      // 在庫チェック
+      const isSoldout = this.marketHandler().isSoldout(result.card.cardId());
+      // コストチェック
+      const isEnough = result.card.cost() <= this.context().turn.turnPointHandler.coin.get();
+      if (isSoldout && isEnough) {
         this.context().turn.turnPointHandler.usedCoin.increase(result.card.cost());
         return result.card;
       }
+
       return await this.getSelectedBuyCard();
     }
   }
@@ -169,6 +205,16 @@ export default class TurnHandler implements Turn {
 
   onStartClean() : void {
 
+  }
+
+  onClean() : void {
+    const hand = this.context().turn.propertyHandler.getHand();
+    const field = this.context().turn.propertyHandler.getField();
+    const discarded = this.context().turn.propertyHandler.getDiscarded();
+
+    discarded.pushSome(hand.removeAllCard());
+    discarded.pushSome(field.removeAllCard());
+    this.context().turn.propertyHandler.draw(5);
   }
 
   onEndClean() : void {

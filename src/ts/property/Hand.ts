@@ -47,4 +47,8 @@ export default class Hand {
     const index = this.cards.findIndex(card => card.itemId() === id);
     return this.cards.splice(index, 1).pop() as Card;
   }
+
+  removeAllCard() {
+    return this.cards.splice(0, this.cards.length);
+  }
 }

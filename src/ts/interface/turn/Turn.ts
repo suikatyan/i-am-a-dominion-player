@@ -1,3 +1,4 @@
+import Card from "interface/card/Card";
 import Action from "interface/card/Action";
 
 export default interface Turn {
@@ -9,10 +10,11 @@ export default interface Turn {
   onEndActionPhase: () => void; // アクションフェーズ終了
   onStartBuyPhase: () => void; // 購入フェーズ開始
   onStartBuyEach: () => void; // 購入前
-  onBuyCard: (card: Action) => void; // 購入カードを選択したとき
+  onBuyCard: (card: Card) => void; // 購入カードを選択したとき
   onEndBuyEach: () => void; // 購入後
   onEndBuyPhase: () => void; // 購入フェーズ終了
   onStartClean: () => void; // 片付けフェーズ開始
+  onClean: () => void; // 片付け
   onEndClean: () => void; // 片付けフェーズ終了
   onEndTurn: () => void; // ターン終了
 }

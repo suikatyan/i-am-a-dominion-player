@@ -6,8 +6,9 @@ import Vue from "vue";
 import CardFactory from "factory/CardFactory";
 import CardComponent from "component/CardComponent";
 import CardWithCountComponent from "component/CardWithCountComponent";
+import CardSorter from "util/CardSorter";
 
-interface MarketCard {
+export interface MarketCard {
   count: number,
   card: Card,
 }
@@ -47,7 +48,7 @@ export default class MarketHandler {
   }
 
   async initialize() {
-    for (const [cardId, count] of this.context().game.cardSet.allCards()) {
+    for (const [cardId, count] of await this.context().game.cardSet.allCards()) {
       const card = await CardFactory.build(cardId);
       this.cards.push({card, count});
     }
@@ -66,5 +67,14 @@ export default class MarketHandler {
     }
 
     return await CardFactory.build(cardId);
+  }
+
+  isSoldout(cardId: CardId) {
+    const marketCard = this.cards.find(marketCard => marketCard.card.cardId() === cardId);
+    if (marketCard) {
+      return marketCard.count;
+    }
+
+    throw new Error(`マーケットに${cardId}はありません。`);
   }
 }

@@ -22,14 +22,17 @@ export default class TurnContext {
   propertyHandler: PropertyHandler;
 
   initialize() {
-    const currentPlayer = this.playerHandler().getNextPlayer();
     this.turnPointHandler = new TurnPointHandler();
+
+    const currentPlayer = this.playerHandler().getCurrentPlayer();
     this.currentPlayer = currentPlayer;
     this.otherPlayers = this.playerHandler().getOtherPlayers();
-    this.hand = currentPlayer.getProperty().getHand();
-    this.field = currentPlayer.getProperty().getField();
-    this.deck = currentPlayer.getProperty().getDeck();
-    this.discarded = currentPlayer.getProperty().getDiscarded();
-    this.propertyHandler = currentPlayer.getProperty();
+
+    const propertyHandler = currentPlayer.getProperty();
+    this.propertyHandler = propertyHandler;
+    this.hand = propertyHandler.getHand();
+    this.field = propertyHandler.getField();
+    this.deck = propertyHandler.getDeck();
+    this.discarded = propertyHandler.getDiscarded();
   }
 }
