@@ -44,6 +44,6 @@ export default class Militia extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

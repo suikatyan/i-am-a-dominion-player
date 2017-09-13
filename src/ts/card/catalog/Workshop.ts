@@ -41,6 +41,6 @@ export default class Workshop extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

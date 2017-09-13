@@ -34,6 +34,7 @@ const actionPoint = new TurnPoint();
 const buyPoint = new TurnPoint();
 const coinPoint = new TurnPoint(0);
 const usedCoin = new TurnPoint(0);
+const effectCoin = new TurnPoint(0);
 
 const view = new Vue({
   el: "#points",
@@ -49,6 +50,7 @@ export default class TurnPointHandler {
   buy: TurnPoint;
   coin: TurnPoint;
   usedCoin: TurnPoint;
+  effectCoin: TurnPoint;
   private view: Vue;
 
   constructor() {
@@ -65,5 +67,8 @@ export default class TurnPointHandler {
 
     this.usedCoin = usedCoin;
     this.usedCoin.initialize();
+
+    this.effectCoin = effectCoin;
+    this.effectCoin.initialize();
   }
 }

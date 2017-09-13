@@ -46,6 +46,6 @@ export default class Market extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

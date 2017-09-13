@@ -44,6 +44,6 @@ export default class Woodcutter extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

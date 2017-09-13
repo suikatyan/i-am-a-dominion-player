@@ -41,6 +41,6 @@ export default class Mine extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

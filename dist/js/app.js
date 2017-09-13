@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "js/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -116,8 +116,15 @@ exports.default = CardCategory;
 
 "use strict";
 
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const UniqueId_1 = __webpack_require__(45);
+const UniqueId_1 = __webpack_require__(43);
+const DI_1 = __webpack_require__(5);
 class AbstractCard {
     constructor() {
         this._itemId = UniqueId_1.default.generate();
@@ -128,7 +135,18 @@ class AbstractCard {
     imagesrc() {
         return `image/card/${this.cardId()}.png`;
     }
+    excuteAtionEffect() {
+        const actionEffect = this.effect();
+        this.context().turn.propertyHandler.draw(actionEffect.card());
+        this.context().turn.turnPointHandler.action.increase(actionEffect.action());
+        this.context().turn.turnPointHandler.buy.increase(actionEffect.buy());
+        this.context().turn.turnPointHandler.effectCoin.increase(actionEffect.coin());
+        this.context().turn.turnPointHandler.coin.increase(actionEffect.coin());
+    }
 }
+__decorate([
+    DI_1.default.inject()
+], AbstractCard.prototype, "context", void 0);
 exports.default = AbstractCard;
 
 
@@ -10295,31 +10313,10 @@ Vue$3.compile = compileToFunctions;
 
 /* harmony default export */ __webpack_exports__["default"] = (Vue$3);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(37), __webpack_require__(38)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(35), __webpack_require__(36)))
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-class CardFactory {
-    static async build(cardId) {
-        try {
-            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(44)(`./${cardId}`); });
-            return new targetClass.default;
-        }
-        catch (e) {
-            throw new Error("CardFactory build error: カードの作成に失敗しました。");
-        }
-    }
-}
-exports.default = CardFactory;
-
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10352,7 +10349,7 @@ exports.default = Util;
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10368,7 +10365,7 @@ exports.default = {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10382,7 +10379,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const CardId_1 = __webpack_require__(0);
 const DI_1 = __webpack_require__(5);
-const CardFactory_1 = __webpack_require__(7);
+const CardFactory_1 = __webpack_require__(11);
 const CardSorter_1 = __webpack_require__(61);
 class AbstractCardSet {
     startCards() {
@@ -10428,14 +10425,14 @@ exports.default = AbstractCardSet;
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const PropertyHandler_1 = __webpack_require__(42);
-const AvatarFactory_1 = __webpack_require__(48);
+const PropertyHandler_1 = __webpack_require__(40);
+const AvatarFactory_1 = __webpack_require__(47);
 class AbstractPlayer {
     constructor(playerIndex) {
         this.propertyHandler = new PropertyHandler_1.default();
@@ -10453,6 +10450,27 @@ class AbstractPlayer {
     }
 }
 exports.default = AbstractPlayer;
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class CardFactory {
+    static async build(cardId) {
+        try {
+            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(42)(`./${cardId}`); });
+            return new targetClass.default;
+        }
+        catch (e) {
+            throw new Error("CardFactory build error: カードの作成に失敗しました。");
+        }
+    }
+}
+exports.default = CardFactory;
 
 
 /***/ }),
@@ -10733,6 +10751,7 @@ class Market extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Market;
@@ -10781,6 +10800,7 @@ class Militia extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Militia;
@@ -10826,6 +10846,7 @@ class Mine extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Mine;
@@ -10874,6 +10895,7 @@ class Moat extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Moat;
@@ -10955,6 +10977,7 @@ class Remodel extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Remodel;
@@ -11038,6 +11061,7 @@ class Smithy extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Smithy;
@@ -11078,7 +11102,7 @@ class Village extends AbstractCard_1.default {
     }
     effect() {
         return new ActionEffectCollection_1.default({
-            card: 2,
+            card: 1,
             action: 2,
         });
     }
@@ -11086,6 +11110,7 @@ class Village extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Village;
@@ -11134,6 +11159,7 @@ class Woodcutter extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Woodcutter;
@@ -11179,6 +11205,7 @@ class Workshop extends AbstractCard_1.default {
         return true;
     }
     async excute() {
+        this.excuteAtionEffect();
     }
 }
 exports.default = Workshop;
@@ -11191,136 +11218,7 @@ exports.default = Workshop;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const vue_1 = __webpack_require__(6);
-const CardComponent_1 = __webpack_require__(9);
-let needView = true;
-class Hand {
-    constructor() {
-        this.cards = [];
-        if (needView) {
-            needView = false;
-            this.view = new vue_1.default({
-                el: "#hand-cards",
-                data: {
-                    cards: this.cards,
-                },
-                components: {
-                    "card-component": CardComponent_1.default,
-                },
-            });
-        }
-    }
-    static querySelectorAll() {
-        return document.querySelectorAll("#hand-cards .card");
-    }
-    push(card) {
-        this.cards.push(card);
-    }
-    pushSome(cards) {
-        this.cards.splice(0, 0, ...cards);
-    }
-    getCards() {
-        return this.cards;
-    }
-    count() {
-        return this.cards.length;
-    }
-    removeCard(id) {
-        const index = this.cards.findIndex(card => card.itemId() === id);
-        return this.cards.splice(index, 1).pop();
-    }
-    removeAllCard() {
-        return this.cards.splice(0, this.cards.length);
-    }
-}
-exports.default = Hand;
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const DI_1 = __webpack_require__(5);
-const vue_1 = __webpack_require__(6);
-const CardFactory_1 = __webpack_require__(7);
-const CardComponent_1 = __webpack_require__(9);
-const CardWithCountComponent_1 = __webpack_require__(51);
-class MarketHandler {
-    constructor() {
-        this.cards = [];
-        this.trashCards = [];
-        this.view = new vue_1.default({
-            el: "#market",
-            data: {
-                cards: this.cards,
-                kingdomStartIndex: 0,
-            },
-            components: {
-                "card-component": CardWithCountComponent_1.default,
-            },
-        });
-        this.trashView = new vue_1.default({
-            el: "#trash",
-            data: {
-                cards: this.trashCards,
-            },
-            components: {
-                "card-component": CardComponent_1.default,
-            },
-        });
-    }
-    static querySelectorAll() {
-        return document.querySelectorAll("#market .card");
-    }
-    async initialize() {
-        for (const [cardId, count] of await this.context().game.cardSet.allCards()) {
-            const card = await CardFactory_1.default.build(cardId);
-            this.cards.push({ card, count });
-        }
-        this.view.kingdomStartIndex = this.context().game.cardSet.basicSupplyCards().size;
-    }
-    getMarketCards() {
-        return this.cards;
-    }
-    async deal(cardId) {
-        for (let i = 0; i < this.cards.length; i++) {
-            if (this.cards[i].card.cardId() === cardId) {
-                this.cards[i].count--;
-            }
-        }
-        return await CardFactory_1.default.build(cardId);
-    }
-    isSoldout(cardId) {
-        const marketCard = this.cards.find(marketCard => marketCard.card.cardId() === cardId);
-        if (marketCard) {
-            return marketCard.count;
-        }
-        throw new Error(`マーケットに${cardId}はありません。`);
-    }
-}
-__decorate([
-    DI_1.default.inject()
-], MarketHandler.prototype, "context", void 0);
-exports.default = MarketHandler;
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractCardSet_1 = __webpack_require__(10);
+const AbstractCardSet_1 = __webpack_require__(9);
 const CardId_1 = __webpack_require__(0);
 class FirstGame extends AbstractCardSet_1.default {
     async kingdomCards() {
@@ -11343,14 +11241,14 @@ exports.default = FirstGame;
 
 
 /***/ }),
-/* 32 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(33);
-const Dominion_1 = __webpack_require__(52);
+__webpack_require__(31);
+const Dominion_1 = __webpack_require__(51);
 (async () => {
     const application = new Dominion_1.default();
     await application.initialize();
@@ -11359,17 +11257,17 @@ const Dominion_1 = __webpack_require__(52);
 
 
 /***/ }),
-/* 33 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const DI_1 = __webpack_require__(5);
-const Context_1 = __webpack_require__(34);
-const PlayerHandler_1 = __webpack_require__(40);
-const NotificationHandler_1 = __webpack_require__(50);
-const MarketHandler_1 = __webpack_require__(30);
+const Context_1 = __webpack_require__(32);
+const PlayerHandler_1 = __webpack_require__(38);
+const NotificationHandler_1 = __webpack_require__(49);
+const MarketHandler_1 = __webpack_require__(50);
 DI_1.default.subscribe("playerHandler", new PlayerHandler_1.default());
 DI_1.default.subscribe("context", new Context_1.default());
 DI_1.default.subscribe("notification", new NotificationHandler_1.default());
@@ -11377,14 +11275,14 @@ DI_1.default.subscribe("marketHandler", new MarketHandler_1.default());
 
 
 /***/ }),
-/* 34 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const TurnContext_1 = __webpack_require__(35);
-const GameContext_1 = __webpack_require__(39);
+const TurnContext_1 = __webpack_require__(33);
+const GameContext_1 = __webpack_require__(37);
 class Context {
     constructor() {
         this.game = new GameContext_1.default();
@@ -11395,7 +11293,7 @@ exports.default = Context;
 
 
 /***/ }),
-/* 35 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11408,7 +11306,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const DI_1 = __webpack_require__(5);
-const TurnPointHandler_1 = __webpack_require__(36);
+const TurnPointHandler_1 = __webpack_require__(34);
 class TurnContext {
     initialize() {
         this.turnPointHandler = new TurnPointHandler_1.default();
@@ -11430,7 +11328,7 @@ exports.default = TurnContext;
 
 
 /***/ }),
-/* 36 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11462,6 +11360,7 @@ const actionPoint = new TurnPoint();
 const buyPoint = new TurnPoint();
 const coinPoint = new TurnPoint(0);
 const usedCoin = new TurnPoint(0);
+const effectCoin = new TurnPoint(0);
 const view = new vue_1.default({
     el: "#points",
     data: {
@@ -11481,13 +11380,15 @@ class TurnPointHandler {
         this.coin.initialize();
         this.usedCoin = usedCoin;
         this.usedCoin.initialize();
+        this.effectCoin = effectCoin;
+        this.effectCoin.initialize();
     }
 }
 exports.default = TurnPointHandler;
 
 
 /***/ }),
-/* 37 */
+/* 35 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -11677,7 +11578,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 38 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var g;
@@ -11704,7 +11605,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 39 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11716,14 +11617,14 @@ exports.default = GameContext;
 
 
 /***/ }),
-/* 40 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Lord_1 = __webpack_require__(41);
-const Robot_1 = __webpack_require__(49);
+const Lord_1 = __webpack_require__(39);
+const Robot_1 = __webpack_require__(48);
 const vue_1 = __webpack_require__(6);
 class PlayerHandler {
     constructor() {
@@ -11783,13 +11684,13 @@ exports.default = PlayerHandler;
 
 
 /***/ }),
-/* 41 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractPlayer_1 = __webpack_require__(11);
+const AbstractPlayer_1 = __webpack_require__(10);
 class Lord extends AbstractPlayer_1.default {
     isRobot() {
         return false;
@@ -11802,16 +11703,16 @@ exports.default = Lord;
 
 
 /***/ }),
-/* 42 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Deck_1 = __webpack_require__(43);
-const Hand_1 = __webpack_require__(29);
-const Field_1 = __webpack_require__(46);
-const Discarded_1 = __webpack_require__(47);
+const Deck_1 = __webpack_require__(41);
+const Hand_1 = __webpack_require__(44);
+const Field_1 = __webpack_require__(45);
+const Discarded_1 = __webpack_require__(46);
 class PropertyHandler {
     constructor() {
         this.deck = new Deck_1.default();
@@ -11875,7 +11776,7 @@ exports.default = PropertyHandler;
 
 
 /***/ }),
-/* 43 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11887,8 +11788,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CardFactory_1 = __webpack_require__(7);
-const Util_1 = __webpack_require__(8);
+const CardFactory_1 = __webpack_require__(11);
+const Util_1 = __webpack_require__(7);
 const DI_1 = __webpack_require__(5);
 class Deck {
     constructor() {
@@ -11927,7 +11828,7 @@ exports.default = Deck;
 
 
 /***/ }),
-/* 44 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -11980,10 +11881,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 44;
+webpackContext.id = 42;
 
 /***/ }),
-/* 45 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12009,14 +11910,66 @@ exports.default = UniqueId;
 
 
 /***/ }),
-/* 46 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = __webpack_require__(6);
-const CardComponent_1 = __webpack_require__(9);
+const CardComponent_1 = __webpack_require__(8);
+let needView = true;
+class Hand {
+    constructor() {
+        this.cards = [];
+        if (needView) {
+            needView = false;
+            this.view = new vue_1.default({
+                el: "#hand-cards",
+                data: {
+                    cards: this.cards,
+                },
+                components: {
+                    "card-component": CardComponent_1.default,
+                },
+            });
+        }
+    }
+    static querySelectorAll() {
+        return document.querySelectorAll("#hand-cards .card");
+    }
+    push(card) {
+        this.cards.push(card);
+    }
+    pushSome(cards) {
+        this.cards.splice(0, 0, ...cards);
+    }
+    getCards() {
+        return this.cards;
+    }
+    count() {
+        return this.cards.length;
+    }
+    removeCard(id) {
+        const index = this.cards.findIndex(card => card.itemId() === id);
+        return this.cards.splice(index, 1).pop();
+    }
+    removeAllCard() {
+        return this.cards.splice(0, this.cards.length);
+    }
+}
+exports.default = Hand;
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const vue_1 = __webpack_require__(6);
+const CardComponent_1 = __webpack_require__(8);
 let view;
 class Field {
     constructor() {
@@ -12051,7 +12004,7 @@ exports.default = Field;
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12078,7 +12031,7 @@ exports.default = Discarded;
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12102,13 +12055,13 @@ exports.default = AvatarFactory;
 
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractPlayer_1 = __webpack_require__(11);
+const AbstractPlayer_1 = __webpack_require__(10);
 class Robot extends AbstractPlayer_1.default {
     constructor(playerIndex) {
         super(playerIndex);
@@ -12125,7 +12078,7 @@ exports.default = Robot;
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12152,26 +12105,7 @@ exports.default = NotificationHandler;
 
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const template = `
-<span>
-  <img v-bind:src="card.imagesrc()" class="card" v-bind:data-item-id="card.itemId()">
-  <span class="market-card-count">{{count.toString().padStart(2, "0")}}</span>
-</span>
-`;
-exports.default = {
-    template: template,
-    props: ["card", "count"],
-};
-
-
-/***/ }),
-/* 52 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12183,11 +12117,88 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractApplication_1 = __webpack_require__(53);
-const SessionHandler_1 = __webpack_require__(54);
 const DI_1 = __webpack_require__(5);
-const CardSetFactory_1 = __webpack_require__(59);
-const Util_1 = __webpack_require__(8);
+const vue_1 = __webpack_require__(6);
+const CardFactory_1 = __webpack_require__(11);
+const CardComponent_1 = __webpack_require__(8);
+const CardWithCountComponent_1 = __webpack_require__(60);
+class MarketHandler {
+    constructor() {
+        this.cards = [];
+        this.trashCards = [];
+        this.view = new vue_1.default({
+            el: "#market",
+            data: {
+                cards: this.cards,
+                kingdomStartIndex: 0,
+            },
+            components: {
+                "card-component": CardWithCountComponent_1.default,
+            },
+        });
+        this.trashView = new vue_1.default({
+            el: "#trash",
+            data: {
+                cards: this.trashCards,
+            },
+            components: {
+                "card-component": CardComponent_1.default,
+            },
+        });
+    }
+    static querySelectorAll() {
+        return document.querySelectorAll("#market .card");
+    }
+    async initialize() {
+        for (const [cardId, count] of await this.context().game.cardSet.allCards()) {
+            const card = await CardFactory_1.default.build(cardId);
+            this.cards.push({ card, count });
+        }
+        this.view.kingdomStartIndex = this.context().game.cardSet.basicSupplyCards().size;
+    }
+    getMarketCards() {
+        return this.cards;
+    }
+    async deal(cardId) {
+        for (let i = 0; i < this.cards.length; i++) {
+            if (this.cards[i].card.cardId() === cardId) {
+                this.cards[i].count--;
+            }
+        }
+        return await CardFactory_1.default.build(cardId);
+    }
+    isSoldout(cardId) {
+        const marketCard = this.cards.find(marketCard => marketCard.card.cardId() === cardId);
+        if (marketCard) {
+            return marketCard.count;
+        }
+        throw new Error(`マーケットに${cardId}はありません。`);
+    }
+}
+__decorate([
+    DI_1.default.inject()
+], MarketHandler.prototype, "context", void 0);
+exports.default = MarketHandler;
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const AbstractApplication_1 = __webpack_require__(52);
+const SessionHandler_1 = __webpack_require__(53);
+const DI_1 = __webpack_require__(5);
+const CardSetFactory_1 = __webpack_require__(58);
+const Util_1 = __webpack_require__(7);
 class Dominion extends AbstractApplication_1.default {
     async initialize() {
         this.context().game.cardSet = await this.buildCardSet();
@@ -12217,7 +12228,7 @@ exports.default = Dominion;
 
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12229,7 +12240,7 @@ exports.default = AbstractApplication;
 
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12241,7 +12252,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const TurnHandler_1 = __webpack_require__(55);
+const TurnHandler_1 = __webpack_require__(54);
 const DI_1 = __webpack_require__(5);
 class Session {
     async prepare(config) {
@@ -12272,7 +12283,7 @@ exports.default = Session;
 
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12286,14 +12297,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const CardCategory_1 = __webpack_require__(1);
 const DI_1 = __webpack_require__(5);
-const CardPicker_1 = __webpack_require__(56);
-const Hand_1 = __webpack_require__(29);
-const MarketHandler_1 = __webpack_require__(30);
-const CardFilter_1 = __webpack_require__(58);
+const CardPicker_1 = __webpack_require__(55);
+const Hand_1 = __webpack_require__(44);
+const MarketHandler_1 = __webpack_require__(50);
+const CardFilter_1 = __webpack_require__(57);
 class TurnHandler {
+    constructor() {
+        this.isSkipableForCoinPick = false;
+    }
     async start() {
-        this.context().turn.initialize();
-        this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
         this.onStartTurn();
         const canContinue = await this.onStartActionPhase();
         this.onEndActionPhase();
@@ -12307,6 +12319,8 @@ class TurnHandler {
         this.onEndTurn();
     }
     onStartTurn() {
+        this.context().turn.initialize();
+        this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
     }
     async onStartActionPhase() {
         while (true) {
@@ -12324,13 +12338,12 @@ class TurnHandler {
                 case CardCategory_1.default.Action:
                     break;
                 case CardCategory_1.default.Treasure:
-                    this.context().turn.propertyHandler.putDown(CardFilter_1.CardFilter.filter(this.context().turn.hand.getCards(), { include: [CardFilter_1.FilterKey.Treasure] }));
+                    this.isSkipableForCoinPick = true;
                     return true;
             }
             this.onStartActionEach(selectedCard);
             await this.onExcuteAction(selectedCard);
             this.onEndActionEach();
-            return true;
         }
     }
     async getActionSelectedCard() {
@@ -12358,8 +12371,22 @@ class TurnHandler {
     onEndActionPhase() {
     }
     async onStartBuyPhase() {
+        this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
+        while (!this.isSkipableForCoinPick) {
+            const selectedCard = await this.getActionSelectedCard();
+            if (!selectedCard) {
+                return false;
+            }
+            if (selectedCard.category() === CardCategory_1.default.Treasure) {
+                this.isSkipableForCoinPick = true;
+            }
+        }
         this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
-        this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
+        const treasureCards = CardFilter_1.CardFilter.filter(this.context().turn.hand.getCards(), { include: [CardFilter_1.FilterKey.Treasure] });
+        this.context().turn.turnPointHandler.coin.increase(treasureCards.reduce((previous, current) => {
+            return current.category() === CardCategory_1.default.Treasure ? current.value() + previous : previous;
+        }, 0));
+        this.context().turn.propertyHandler.putDown(treasureCards);
         while (true) {
             if (this.context().turn.turnPointHandler.buy.get() === 0) {
                 return false;
@@ -12371,7 +12398,6 @@ class TurnHandler {
             await this.onStartBuyEach();
             await this.onBuyCard(selectedBuyCard);
             await this.onEndBuyEach();
-            return true;
         }
     }
     async getSelectedBuyCard() {
@@ -12386,26 +12412,15 @@ class TurnHandler {
             return;
         }
         while (true) {
-            const isSoldout = this.marketHandler().isSoldout(result.card.cardId());
+            const isSoldout = this.marketHandler().isSoldout(result.card.cardId()) === 0;
             const isEnough = result.card.cost() <= this.context().turn.turnPointHandler.coin.get();
-            if (isSoldout && isEnough) {
+            if (!isSoldout && isEnough) {
                 this.context().turn.turnPointHandler.usedCoin.increase(result.card.cost());
+                this.context().turn.turnPointHandler.coin.decrease(result.card.cost());
                 return result.card;
             }
             return await this.getSelectedBuyCard();
         }
-    }
-    calculateCoinPoint() {
-        const field = this.context().turn.propertyHandler.getField();
-        return field.getCards().reduce((previous, current) => {
-            switch (current.category()) {
-                case CardCategory_1.default.Treasure:
-                    return previous + current.value();
-                case CardCategory_1.default.Action:
-                    return previous + current.effect().coin();
-            }
-            return 0;
-        }, this.context().turn.turnPointHandler.usedCoin.get() * -1);
     }
     onStartBuyEach() {
         this.context().turn.turnPointHandler.buy.decrease();
@@ -12414,7 +12429,6 @@ class TurnHandler {
         this.context().turn.discarded.push(await this.marketHandler().deal(card.cardId()));
     }
     onEndBuyEach() {
-        this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
     }
     onEndBuyPhase() {
     }
@@ -12446,13 +12460,13 @@ exports.default = TurnHandler;
 
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const EventAwaiter_1 = __webpack_require__(57);
+const EventAwaiter_1 = __webpack_require__(56);
 class CardPicker {
     static async itemId(targets) {
         const element = await EventAwaiter_1.default.awaiter({
@@ -12489,7 +12503,7 @@ exports.default = CardPicker;
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12520,7 +12534,7 @@ exports.default = EventAwaiter;
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12557,17 +12571,17 @@ exports.CardFilter = CardFilter;
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Util_1 = __webpack_require__(8);
+const Util_1 = __webpack_require__(7);
 class CardSetFactory {
     static async build(cardSetName) {
         try {
-            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(60)(`./${CardSetFactory.getCardSetName(cardSetName)}`); });
+            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(59)(`./${CardSetFactory.getCardSetName(cardSetName)}`); });
             return new targetClass.default;
         }
         catch (e) {
@@ -12585,14 +12599,14 @@ exports.default = CardSetFactory;
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./AbstractCardSet": 10,
-	"./AbstractCardSet.ts": 10,
-	"./FirstGame": 31,
-	"./FirstGame.ts": 31
+	"./AbstractCardSet": 9,
+	"./AbstractCardSet.ts": 9,
+	"./FirstGame": 29,
+	"./FirstGame.ts": 29
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -12608,7 +12622,26 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 60;
+webpackContext.id = 59;
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const template = `
+<span>
+  <img v-bind:src="card.imagesrc()" class="card" v-bind:data-item-id="card.itemId()">
+  <span class="market-card-count">{{count.toString().padStart(2, "0")}}</span>
+</span>
+`;
+exports.default = {
+    template: template,
+    props: ["card", "count"],
+};
+
 
 /***/ }),
 /* 61 */

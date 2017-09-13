@@ -43,6 +43,6 @@ export default class Smithy extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

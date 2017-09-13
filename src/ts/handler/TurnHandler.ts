@@ -10,7 +10,6 @@ import Hand from "property/Hand";
 import NotificationHandler from "handler/NotificationHandler";
 import MarketHandler from "handler/MarketHandler";
 import {CardFilter, FilterKey} from "util/CardFilter";
-import Sleeper from "util/Sleeper";
 
 export default class TurnHandler implements Turn {
   @DI.inject()
@@ -19,11 +18,9 @@ export default class TurnHandler implements Turn {
   private notification: () => NotificationHandler;
   @DI.inject()
   private marketHandler: () => MarketHandler;
+  private isSkipableForCoinPick = false;
 
   async start() : Promise<void> {
-    this.context().turn.initialize();
-    this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
-
     this.onStartTurn();
 
     const canContinue = await this.onStartActionPhase();
@@ -42,7 +39,8 @@ export default class TurnHandler implements Turn {
   }
 
   onStartTurn() {
-
+    this.context().turn.initialize();
+    this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
   }
 
   async onStartActionPhase() : Promise<boolean> {
@@ -65,12 +63,7 @@ export default class TurnHandler implements Turn {
           // 先に進める
           break;
         case CardCategory.Treasure:
-          this.context().turn.propertyHandler.putDown(
-            CardFilter.filter(
-              this.context().turn.hand.getCards(),
-              {include: [FilterKey.Treasure]},
-            ),
-          );
+          this.isSkipableForCoinPick = true;
 
           return true;
       }
@@ -78,8 +71,6 @@ export default class TurnHandler implements Turn {
       this.onStartActionEach(selectedCard as Action);
       await this.onExcuteAction(selectedCard as Action);
       this.onEndActionEach();
-
-      return true;
     }
   }
 
@@ -123,8 +114,29 @@ export default class TurnHandler implements Turn {
   }
 
   async onStartBuyPhase() : Promise<boolean> {
+    this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
+    while (!this.isSkipableForCoinPick) {
+      const selectedCard = await this.getActionSelectedCard();
+      if (!selectedCard) {
+        return false;
+      }
+
+      if (selectedCard.category() === CardCategory.Treasure) {
+        this.isSkipableForCoinPick = true;
+      }
+    }
+
     this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
-    this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
+
+    const treasureCards = CardFilter.filter(
+      this.context().turn.hand.getCards(),
+      {include: [FilterKey.Treasure]},
+    );
+    this.context().turn.turnPointHandler.coin.increase(treasureCards.reduce((previous, current) => {
+      return current.category() === CardCategory.Treasure ? (<Treasure> current).value() + previous : previous;
+    }, 0));
+    this.context().turn.propertyHandler.putDown(treasureCards);
+
     while(true) {
       if (this.context().turn.turnPointHandler.buy.get() === 0) {
         return false;
@@ -137,8 +149,6 @@ export default class TurnHandler implements Turn {
       await this.onStartBuyEach();
       await this.onBuyCard(selectedBuyCard);
       await this.onEndBuyEach();
-
-      return true;
     }
   }
 
@@ -163,30 +173,17 @@ export default class TurnHandler implements Turn {
 
     while (true) {
       // 在庫チェック
-      const isSoldout = this.marketHandler().isSoldout(result.card.cardId());
+      const isSoldout = this.marketHandler().isSoldout(result.card.cardId()) === 0;
       // コストチェック
       const isEnough = result.card.cost() <= this.context().turn.turnPointHandler.coin.get();
-      if (isSoldout && isEnough) {
+      if (!isSoldout && isEnough) {
         this.context().turn.turnPointHandler.usedCoin.increase(result.card.cost());
+        this.context().turn.turnPointHandler.coin.decrease(result.card.cost());
         return result.card;
       }
 
       return await this.getSelectedBuyCard();
     }
-  }
-
-  calculateCoinPoint() : number {
-    const field = this.context().turn.propertyHandler.getField();
-    return field.getCards().reduce((previous, current) => {
-      switch (current.category()) {
-        case CardCategory.Treasure:
-          return previous + (<Treasure> current).value();
-        case CardCategory.Action:
-          return previous + (<Action> current).effect().coin();
-      }
-
-      return 0;
-    }, this.context().turn.turnPointHandler.usedCoin.get() * -1);
   }
 
   onStartBuyEach() : void {
@@ -198,7 +195,7 @@ export default class TurnHandler implements Turn {
   }
 
   onEndBuyEach() : void {
-    this.context().turn.turnPointHandler.coin.set(this.calculateCoinPoint());
+
   }
 
   onEndBuyPhase() : void {

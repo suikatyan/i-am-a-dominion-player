@@ -2,7 +2,7 @@ import Card from "interface/card/Card";
 import Action from "interface/card/Action";
 
 export default interface Turn {
-  onStartTurn: () => Promise<void>; // ターン開始
+  onStartTurn: () => void; // ターン開始
   onStartActionPhase: () => Promise<boolean>; // アクションフェーズ開始
   onStartActionEach: (card: Action) => void; //  アクションカード効果前
   onExcuteAction: (card: Action) => Promise<void>; // アクションカード効果発動

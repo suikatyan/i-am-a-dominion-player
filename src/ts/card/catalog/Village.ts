@@ -34,7 +34,7 @@ export default class Village extends AbstractCard implements Action {
 
   effect() {
     return new ActionEffectCollection({
-      card: 2,
+      card: 1,
       action: 2,
     });
   }
@@ -44,6 +44,6 @@ export default class Village extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }

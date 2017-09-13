@@ -41,6 +41,6 @@ export default class Remodel extends AbstractCard implements Action {
   }
 
   async excute() {
-
+    this.excuteAtionEffect();
   }
 }
