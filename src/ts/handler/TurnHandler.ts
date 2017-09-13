@@ -10,6 +10,7 @@ import Hand from "property/Hand";
 import NotificationHandler from "handler/NotificationHandler";
 import MarketHandler from "handler/MarketHandler";
 import {CardFilter, FilterKey} from "util/CardFilter";
+import Sleeper from "util/Sleeper";
 
 export default class TurnHandler implements Turn {
   @DI.inject()
@@ -74,9 +75,9 @@ export default class TurnHandler implements Turn {
           return true;
       }
 
-      await this.onStartActionEach();
+      this.onStartActionEach(selectedCard as Action);
       await this.onExcuteAction(selectedCard as Action);
-      await this.onEndActionEach();
+      this.onEndActionEach();
 
       return true;
     }
@@ -104,12 +105,13 @@ export default class TurnHandler implements Turn {
     return result.card;
   }
 
-  onStartActionEach() : void {
+  onStartActionEach(card: Action) : void {
     this.context().turn.turnPointHandler.action.decrease();
+    this.context().turn.propertyHandler.putDown(card);
   }
 
-  onExcuteAction(card: Action) : void {
-    card.excute();
+  async onExcuteAction(card: Action) : Promise<void> {
+    await card.excute();
   }
 
   onEndActionEach() : void {

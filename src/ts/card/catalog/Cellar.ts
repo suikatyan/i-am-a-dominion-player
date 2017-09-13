@@ -42,7 +42,7 @@ export default class Cellar extends AbstractCard implements Action {
     return true;
   }
 
-  excute() {
+  async excute() {
 
   }
 }

@@ -43,7 +43,7 @@ export default class Woodcutter extends AbstractCard implements Action {
     return true;
   }
 
-  excute() {
+  async excute() {
 
   }
 }

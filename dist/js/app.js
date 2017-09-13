@@ -10304,6 +10304,27 @@ Vue$3.compile = compileToFunctions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+class CardFactory {
+    static async build(cardId) {
+        try {
+            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(44)(`./${cardId}`); });
+            return new targetClass.default;
+        }
+        catch (e) {
+            throw new Error("CardFactory build error: カードの作成に失敗しました。");
+        }
+    }
+}
+exports.default = CardFactory;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 class Util {
     static shuffle(array) {
         for (var i = array.length - 1; i > 0; i--) {
@@ -10331,7 +10352,7 @@ exports.default = Util;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10347,7 +10368,7 @@ exports.default = {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10361,7 +10382,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const CardId_1 = __webpack_require__(0);
 const DI_1 = __webpack_require__(5);
-const CardFactory_1 = __webpack_require__(11);
+const CardFactory_1 = __webpack_require__(7);
 const CardSorter_1 = __webpack_require__(61);
 class AbstractCardSet {
     startCards() {
@@ -10407,7 +10428,7 @@ exports.default = AbstractCardSet;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10432,27 +10453,6 @@ class AbstractPlayer {
     }
 }
 exports.default = AbstractPlayer;
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-class CardFactory {
-    static async build(cardId) {
-        try {
-            const targetClass = await Promise.resolve().then(function () { return __webpack_require__(44)(`./${cardId}`); });
-            return new targetClass.default;
-        }
-        catch (e) {
-            throw new Error("CardFactory build error: カードの作成に失敗しました。");
-        }
-    }
-}
-exports.default = CardFactory;
 
 
 /***/ }),
@@ -10496,7 +10496,7 @@ class Cellar extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Cellar;
@@ -10732,7 +10732,7 @@ class Market extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Market;
@@ -10780,7 +10780,7 @@ class Militia extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Militia;
@@ -10825,7 +10825,7 @@ class Mine extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Mine;
@@ -10873,7 +10873,7 @@ class Moat extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Moat;
@@ -10954,7 +10954,7 @@ class Remodel extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Remodel;
@@ -11037,7 +11037,7 @@ class Smithy extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Smithy;
@@ -11085,7 +11085,7 @@ class Village extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Village;
@@ -11133,7 +11133,7 @@ class Woodcutter extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Woodcutter;
@@ -11178,7 +11178,7 @@ class Workshop extends AbstractCard_1.default {
     isKingdomCard() {
         return true;
     }
-    excute() {
+    async excute() {
     }
 }
 exports.default = Workshop;
@@ -11192,7 +11192,7 @@ exports.default = Workshop;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = __webpack_require__(6);
-const CardComponent_1 = __webpack_require__(8);
+const CardComponent_1 = __webpack_require__(9);
 let needView = true;
 class Hand {
     constructor() {
@@ -11251,8 +11251,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const DI_1 = __webpack_require__(5);
 const vue_1 = __webpack_require__(6);
-const CardFactory_1 = __webpack_require__(11);
-const CardComponent_1 = __webpack_require__(8);
+const CardFactory_1 = __webpack_require__(7);
+const CardComponent_1 = __webpack_require__(9);
 const CardWithCountComponent_1 = __webpack_require__(51);
 class MarketHandler {
     constructor() {
@@ -11320,7 +11320,7 @@ exports.default = MarketHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractCardSet_1 = __webpack_require__(9);
+const AbstractCardSet_1 = __webpack_require__(10);
 const CardId_1 = __webpack_require__(0);
 class FirstGame extends AbstractCardSet_1.default {
     async kingdomCards() {
@@ -11789,7 +11789,7 @@ exports.default = PlayerHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractPlayer_1 = __webpack_require__(10);
+const AbstractPlayer_1 = __webpack_require__(11);
 class Lord extends AbstractPlayer_1.default {
     isRobot() {
         return false;
@@ -11887,8 +11887,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CardFactory_1 = __webpack_require__(11);
-const Util_1 = __webpack_require__(7);
+const CardFactory_1 = __webpack_require__(7);
+const Util_1 = __webpack_require__(8);
 const DI_1 = __webpack_require__(5);
 class Deck {
     constructor() {
@@ -12016,7 +12016,7 @@ exports.default = UniqueId;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = __webpack_require__(6);
-const CardComponent_1 = __webpack_require__(8);
+const CardComponent_1 = __webpack_require__(9);
 let view;
 class Field {
     constructor() {
@@ -12108,7 +12108,7 @@ exports.default = AvatarFactory;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const AbstractPlayer_1 = __webpack_require__(10);
+const AbstractPlayer_1 = __webpack_require__(11);
 class Robot extends AbstractPlayer_1.default {
     constructor(playerIndex) {
         super(playerIndex);
@@ -12187,7 +12187,7 @@ const AbstractApplication_1 = __webpack_require__(53);
 const SessionHandler_1 = __webpack_require__(54);
 const DI_1 = __webpack_require__(5);
 const CardSetFactory_1 = __webpack_require__(59);
-const Util_1 = __webpack_require__(7);
+const Util_1 = __webpack_require__(8);
 class Dominion extends AbstractApplication_1.default {
     async initialize() {
         this.context().game.cardSet = await this.buildCardSet();
@@ -12327,9 +12327,9 @@ class TurnHandler {
                     this.context().turn.propertyHandler.putDown(CardFilter_1.CardFilter.filter(this.context().turn.hand.getCards(), { include: [CardFilter_1.FilterKey.Treasure] }));
                     return true;
             }
-            await this.onStartActionEach();
+            this.onStartActionEach(selectedCard);
             await this.onExcuteAction(selectedCard);
-            await this.onEndActionEach();
+            this.onEndActionEach();
             return true;
         }
     }
@@ -12346,11 +12346,12 @@ class TurnHandler {
         }
         return result.card;
     }
-    onStartActionEach() {
+    onStartActionEach(card) {
         this.context().turn.turnPointHandler.action.decrease();
+        this.context().turn.propertyHandler.putDown(card);
     }
-    onExcuteAction(card) {
-        card.excute();
+    async onExcuteAction(card) {
+        await card.excute();
     }
     onEndActionEach() {
     }
@@ -12562,7 +12563,7 @@ exports.CardFilter = CardFilter;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Util_1 = __webpack_require__(7);
+const Util_1 = __webpack_require__(8);
 class CardSetFactory {
     static async build(cardSetName) {
         try {
@@ -12588,8 +12589,8 @@ exports.default = CardSetFactory;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./AbstractCardSet": 9,
-	"./AbstractCardSet.ts": 9,
+	"./AbstractCardSet": 10,
+	"./AbstractCardSet.ts": 10,
 	"./FirstGame": 31,
 	"./FirstGame.ts": 31
 };

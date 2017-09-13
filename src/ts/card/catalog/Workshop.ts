@@ -40,7 +40,7 @@ export default class Workshop extends AbstractCard implements Action {
     return true;
   }
 
-  excute() {
+  async excute() {
 
   }
 }
