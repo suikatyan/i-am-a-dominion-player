@@ -3,17 +3,13 @@ import Victory from "interface/card/Victory";
 import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
 
-export default class Estate extends AbstractCard implements Victory {
-  value() {
-    return 1;
-  }
-
+export default class Gardens extends AbstractCard implements Victory {
   cardId() {
-    return CardId.Estate;
+    return CardId.Gardens;
   }
 
   name() {
-    return "屋敷";
+    return "庭園";
   }
 
   category() {
@@ -21,18 +17,18 @@ export default class Estate extends AbstractCard implements Victory {
   }
 
   cost() {
-    return 2;
+    return 4;
   }
 
   description() {
-    return "[vp 1]。";
+    return "あなたの山札のカード１０枚（端数切り捨て）につき勝利点１を得る。";
   }
 
   victoryPoint() {
-    return 1;
+    return 0;
   }
 
   isKingdomCard() {
-    return false;
+    return true;
   }
 }

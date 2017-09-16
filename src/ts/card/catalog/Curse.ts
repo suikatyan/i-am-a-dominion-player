@@ -8,7 +8,7 @@ export default class Curse extends AbstractCard implements CurseInterface {
     return 1;
   }
 
-  cardId () {
+  cardId() {
     return CardId.Curse;
   }
 

@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class ThroneRoom extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.ThroneRoom;
   }
 
   name() {
-    return "民兵";
+    return "玉座の間";
   }
 
   category() {
@@ -23,20 +23,17 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "あなたの手札のアクションカード１枚を選ぶ。[br]そのカードを２回使用する。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
-    return new ActionEffectCollection({
-      coin: 2,
-    });
+    return new ActionEffectCollection({});
   }
 
   isKingdomCard() {

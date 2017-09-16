@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Feast extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Feast;
   }
 
   name() {
-    return "民兵";
+    return "祝宴";
   }
 
   category() {
@@ -23,20 +23,17 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "このカードを廃棄する。[br]コスト５コイン以下のカード１枚を獲得する。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
-    return new ActionEffectCollection({
-      coin: 2,
-    });
+    return new ActionEffectCollection({});
   }
 
   isKingdomCard() {

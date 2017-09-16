@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Library extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Library;
   }
 
   name() {
-    return "民兵";
+    return "書庫";
   }
 
   category() {
@@ -19,24 +19,21 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   cost() {
-    return 4;
+    return 5;
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "あなたの手札が７枚になるまでカードを引く。[br]この方法で引いたアクションカードを脇に置いてもよい。（７枚には数えない。）脇に置いたカードは、このアクションの後、捨て札にする。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
-    return new ActionEffectCollection({
-      coin: 2,
-    });
+    return new ActionEffectCollection({});
   }
 
   isKingdomCard() {

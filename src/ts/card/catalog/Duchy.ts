@@ -4,7 +4,7 @@ import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
 
 export default class Duchy extends AbstractCard implements Victory {
-  cardId () {
+  cardId() {
     return CardId.Duchy;
   }
 

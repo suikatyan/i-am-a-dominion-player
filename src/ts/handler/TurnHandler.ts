@@ -44,6 +44,12 @@ export default class TurnHandler implements Turn {
   }
 
   async onStartActionPhase() : Promise<boolean> {
+    // 手札に財宝カードもアクションカードも無い場合は、購入フェーズに移れなくなる問題の対策
+    if (CardFilter.filter(this.context().turn.hand.getCards(), {include: [FilterKey.Treasure, FilterKey.Action]}).length === 0) {
+      return true;
+    }
+
+    // アクションフェーズで使うカードを受け付ける
     while (true) {
       if (this.context().turn.turnPointHandler.action.get() <= 0) {
         return true;
@@ -75,6 +81,7 @@ export default class TurnHandler implements Turn {
   }
 
   async getActionSelectedCard() : Promise<Card | void> {
+    // Robotの場合
     if (this.context().turn.currentPlayer.isRobot()) {
       return;
       // return this.context().turn.currentPlayer.getActionSelectedCard();
@@ -115,7 +122,14 @@ export default class TurnHandler implements Turn {
 
   async onStartBuyPhase() : Promise<boolean> {
     this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
+    
+    // 購入に使う財宝カードの選択を受け付ける
     while (!this.isSkipableForCoinPick) {
+      // 手札に財宝カードもアクションカードも無い場合は、購入フェーズで買い物出来なくなる問題の対策
+      if (CardFilter.filter(this.context().turn.hand.getCards(), {include: [FilterKey.Treasure, FilterKey.Action]}).length === 0) {
+        break;
+      }
+
       const selectedCard = await this.getActionSelectedCard();
       if (!selectedCard) {
         return false;
@@ -128,6 +142,7 @@ export default class TurnHandler implements Turn {
 
     this.notification().say("購入するカードを選んでください。\nまたは、ターンを終了してください。");
 
+    // 財宝カードをフィールドに出す
     const treasureCards = CardFilter.filter(
       this.context().turn.hand.getCards(),
       {include: [FilterKey.Treasure]},
@@ -137,6 +152,7 @@ export default class TurnHandler implements Turn {
     }, 0));
     this.context().turn.propertyHandler.putDown(treasureCards);
 
+    // 購入カードを受け付ける
     while(true) {
       if (this.context().turn.turnPointHandler.buy.get() === 0) {
         return false;

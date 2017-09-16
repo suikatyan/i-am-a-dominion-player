@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Moneylender extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Moneylender;
   }
 
   name() {
-    return "民兵";
+    return "金貸し";
   }
 
   category() {
@@ -23,19 +23,21 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "あなたの手札から銅貨１枚を廃棄する。そうした場合、+[turn-cp-inline 3]を使用できる。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
     return new ActionEffectCollection({
-      coin: 2,
+      card:   1,
+      action: 1,
+      buy:    1,
+      coin:   1,
     });
   }
 

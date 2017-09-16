@@ -7,7 +7,7 @@ export default class CardFactory {
       const targetClass = await import(`card/catalog/${cardId}`);
       return new targetClass.default;
     } catch (e) {
-      throw new Error("CardFactory build error: カードの作成に失敗しました。");
+      throw new Error(`CardFactory build error: カードの作成に失敗しました。：${cardId}`);
     }
   }
 }

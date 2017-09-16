@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Festival extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Festival;
   }
 
   name() {
-    return "民兵";
+    return "祝祭";
   }
 
   category() {
@@ -19,23 +19,24 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   cost() {
-    return 4;
+    return 5;
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "[turn-ap 2][turn-bp 1][turn-cp 2]";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
     return new ActionEffectCollection({
-      coin: 2,
+      coin:   2,
+      action: 2,
+      buy:    1,
     });
   }
 

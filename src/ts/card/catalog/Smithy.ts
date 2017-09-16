@@ -1,12 +1,12 @@
-import AbstractCard from 'card/AbstractCard';
+import AbstractActionCard from 'card/AbstractActionCard';
 import Action from "interface/card/Action";
 import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Smithy extends AbstractCard implements Action {
-  cardId () {
+export default class Smithy extends AbstractActionCard implements Action {
+  cardId() {
     return CardId.Smithy;
   }
 
@@ -43,6 +43,6 @@ export default class Smithy extends AbstractCard implements Action {
   }
 
   async excute() {
-    this.excuteAtionEffect();
+    this.excuteActionEffect();
   }
 }

@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Spy extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Spy;
   }
 
   name() {
-    return "民兵";
+    return "密偵";
   }
 
   category() {
@@ -23,7 +23,7 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "[turn-card 1][turn-ap 1]各プレイヤー（あなたも含む）は、自分の山札の一番上のカードを公開し、そのカードを捨て札にするかそのまま戻すかをあなたが選ぶ。";
   }
 
   actionCategory() {
@@ -35,7 +35,8 @@ export default class Militia extends AbstractActionCard implements Action {
 
   effect() {
     return new ActionEffectCollection({
-      coin: 2,
+      card:   1,
+      action: 1,
     });
   }
 

@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Witch extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Witch;
   }
 
   name() {
-    return "民兵";
+    return "魔女";
   }
 
   category() {
@@ -19,11 +19,11 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   cost() {
-    return 4;
+    return 5;
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "[turn-card 2]他のプレイヤーは全員、呪いカードを１枚ずつ獲得する。";
   }
 
   actionCategory() {
@@ -35,7 +35,7 @@ export default class Militia extends AbstractActionCard implements Action {
 
   effect() {
     return new ActionEffectCollection({
-      coin: 2,
+      card: 2,
     });
   }
 

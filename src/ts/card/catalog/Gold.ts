@@ -8,7 +8,7 @@ export default class Gold extends AbstractCard implements Treasure {
     return 3;
   }
 
-  cardId () {
+  cardId() {
     return CardId.Gold;
   }
 

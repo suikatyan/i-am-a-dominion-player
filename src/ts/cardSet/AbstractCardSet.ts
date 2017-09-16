@@ -8,6 +8,11 @@ import CardSorter from "util/CardSorter";
 export default abstract class AbstractCardSet {
   @DI.inject()
   private playerHandler: () => PlayerHandler;
+  protected playerCount: number;
+
+  constructor() {
+    this.playerCount = this.playerHandler().count();
+  }
 
   startCards() : Map<CardId, number> {
     return new Map([
@@ -17,9 +22,8 @@ export default abstract class AbstractCardSet {
   }
 
   basicSupplyCards() : Map<CardId, number> {
-    const playerCount = this.playerHandler().count();
-    const victoryCount = playerCount === 2 ? 8 : 12;
-    const curseCount = playerCount * 10 - 10;
+    const victoryCount = this.playerCount === 2 ? 8 : 12;
+    const curseCount = this.playerCount * 10 - 10;
 
     return new Map([
       [CardId.Copper,   60],

@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Adventurer extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Adventurer;
   }
 
   name() {
-    return "民兵";
+    return "冒険者";
   }
 
   category() {
@@ -19,24 +19,21 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   cost() {
-    return 4;
+    return 6;
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "あなたの山札から財宝カード２枚が公開されるまで、カードを公開する。[br]公開した財宝カード２枚を手札に加え、他の公開したカードは捨て札に置く。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
-    return new ActionEffectCollection({
-      coin: 2,
-    });
+    return new ActionEffectCollection({});
   }
 
   isKingdomCard() {

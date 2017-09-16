@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Laboratory extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Laboratory;
   }
 
   name() {
-    return "民兵";
+    return "研究所";
   }
 
   category() {
@@ -19,23 +19,23 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   cost() {
-    return 4;
+    return 5;
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "[turn-card 2][turn-ap 1]";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
     return new ActionEffectCollection({
-      coin: 2,
+      action: 1,
+      card: 1,
     });
   }
 

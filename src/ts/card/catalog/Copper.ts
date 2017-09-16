@@ -8,7 +8,7 @@ export default class Copper extends AbstractCard implements Treasure {
     return 1;
   }
 
-  cardId () {
+  cardId() {
     return CardId.Copper;
   }
 

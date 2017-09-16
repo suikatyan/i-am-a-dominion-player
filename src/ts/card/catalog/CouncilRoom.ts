@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class CouncilRoom extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.CouncilRoom;
   }
 
   name() {
-    return "民兵";
+    return "議事堂";
   }
 
   category() {
@@ -23,19 +23,19 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "[turn-card 4][turn-cp 1]他のプレイヤー全員は、カードを１枚引く。";
   }
 
   actionCategory() {
     return new Set([
       ActionCategory.Action,
-      ActionCategory.Attack,
     ]);
   }
 
   effect() {
     return new ActionEffectCollection({
-      coin: 2,
+      card: 4,
+      buy: 1,
     });
   }
 

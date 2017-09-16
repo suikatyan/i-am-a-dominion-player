@@ -23,6 +23,21 @@ enum CardId {
   Village = "Village",
   Woodcutter = "Woodcutter",
   Workshop = "Workshop",
+  Adventurer = "Adventurer",
+  Bureaucrat = "Bureaucrat",
+  Chancellor = "Chancellor",
+  Chapel = "Chapel",
+  Feast = "Feast",
+  Laboratory = "Laboratory",
+  Moneylender = "Moneylender",
+  ThroneRoom = "ThroneRoom",
+  Festival = "Festival",
+  Gardens = "Gardens",
+  Library = "Library",
+  Spy = "Spy",
+  Thief = "Thief",
+  Witch = "Witch",
+  CouncilRoom = "CouncilRoom",
 }
 
 

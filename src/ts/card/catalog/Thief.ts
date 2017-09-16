@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Thief extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Thief;
   }
 
   name() {
-    return "民兵";
+    return "泥棒";
   }
 
   category() {
@@ -23,7 +23,7 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "他のプレイヤーは全員、自分の山札の上から２枚のカードを公開する。[br]財宝カードを公開した場合、その中の１枚をあなたが選んで廃棄する。[br]あなたはここで廃棄したカードのうち好きな枚数を獲得できる。[br]他の公開したカードはすべて捨て札にする。";
   }
 
   actionCategory() {
@@ -34,9 +34,7 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   effect() {
-    return new ActionEffectCollection({
-      coin: 2,
-    });
+    return new ActionEffectCollection({});
   }
 
   isKingdomCard() {

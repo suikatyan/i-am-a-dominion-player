@@ -5,13 +5,13 @@ import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 
-export default class Militia extends AbstractActionCard implements Action {
+export default class Bureaucrat extends AbstractActionCard implements Action {
   cardId() {
-    return CardId.Militia;
+    return CardId.Bureaucrat;
   }
 
   name() {
-    return "民兵";
+    return "役人";
   }
 
   category() {
@@ -23,7 +23,7 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   description() {
-    return "[turn-cp 2]他のプレイヤーは全員、自分の手札が３枚になるまで捨て札をする。";
+    return "銀貨１枚を獲得し、あなたの山札の上に置く。[br]他のプレイヤーは全員、自分の手札から勝利点カード１枚を公開し、自分の山札の上に置く。（手札に勝利点カードがない場合、手札を公開する。）";
   }
 
   actionCategory() {
@@ -34,9 +34,7 @@ export default class Militia extends AbstractActionCard implements Action {
   }
 
   effect() {
-    return new ActionEffectCollection({
-      coin: 2,
-    });
+    return new ActionEffectCollection({});
   }
 
   isKingdomCard() {

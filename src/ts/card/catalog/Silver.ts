@@ -8,7 +8,7 @@ export default class Silver extends AbstractCard implements Treasure {
     return 2;
   }
 
-  cardId () {
+  cardId() {
     return CardId.Silver;
   }
 
