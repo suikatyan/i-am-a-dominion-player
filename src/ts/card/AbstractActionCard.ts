@@ -5,11 +5,11 @@ import DI from "util/DI";
 
 export default abstract class AbstractActionCard extends AbstractCard {
   @DI.inject()
-  private context: () => Context;
+  protected context: () => Context;
 
   abstract effect() : ActionEffectCollection;
 
-  protected excuteActionEffect() {
+  private excuteActionEffect() {
     const actionEffect = this.effect();
     const turnPointHandler = this.context().turn.turnPointHandler;
 
@@ -19,4 +19,11 @@ export default abstract class AbstractActionCard extends AbstractCard {
     turnPointHandler.effectCoin.increase(actionEffect.coin());
     turnPointHandler.coin.increase(actionEffect.coin());
   }
+
+  async excute() {
+    this.excuteActionEffect();
+    await this.onExcute();
+  }
+
+  protected abstract async onExcute() : Promise<void>;
 }

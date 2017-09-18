@@ -2,6 +2,7 @@ import PlayerHandler from 'handler/PlayerHandler';
 import TurnHandler from "handler/TurnHandler";
 import MarketHandler from "handler/MarketHandler";
 import DI from "util/DI";
+import CardId from "list/CardId";
 
 interface SessionConfig {
   playerCount: number;
@@ -20,11 +21,7 @@ export default class Session {
   }
 
   async start() {
-    while (true) {
-      if (!this.canContinue()) {
-        break;
-      }
-
+    while (this.canContinue()) {
       this.playerHandler().next();
       const turn = new TurnHandler();
       await turn.start();
@@ -32,6 +29,34 @@ export default class Session {
   }
 
   canContinue() : boolean {
+    const SoldOutCardIds = this.marketHandler().getSoldOutCardIds();
+
+    // 「属州」などの特定のカードが在庫切れなら、ゲーム終了
+    const condition1 = SoldOutCardIds.some((cardId) => {
+      switch(cardId) {
+        case CardId.Province:
+          return true;
+      }
+
+      return false;
+    });
+    if (condition1) {
+      return false;
+    }
+
+    // 「属州」などの特定のカード以外が3つ以上在庫切れなら、ゲーム終了
+    const condition2 = SoldOutCardIds.filter((cardId) => {
+      switch(cardId) {
+        case CardId.Province:
+          return false;
+      }
+
+      return true;
+    }).length >= 3;
+    if (condition2) {
+      return false;
+    }
+
     return true;
   }
 }

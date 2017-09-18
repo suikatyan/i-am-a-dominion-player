@@ -11,15 +11,13 @@ export default class SizeDistortion extends AbstractCardSet implements CardSet {
   name() {
     return "サイズ変形";
   }
-  
-  async kingdomCards() {
-    const playerCount = this.playerCount;
 
+  async kingdomCards() {
     const cards = await this.sort([
       [CardId.Cellar,     10],
       [CardId.Chapel,     10],
       [CardId.Feast,      10],
-      [CardId.Gardens,    playerCount === 2 ? 8 : 12],
+      [CardId.Gardens,    this.playerCount === 2 ? 8 : 12],
       [CardId.Laboratory, 10],
       [CardId.Thief,      10],
       [CardId.Village,    10],

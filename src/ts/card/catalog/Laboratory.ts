@@ -43,7 +43,7 @@ export default class Laboratory extends AbstractActionCard implements Action {
     return true;
   }
 
-  async excute() {
-    this.excuteActionEffect();
+  protected async onExcute() {
+
   }
 }

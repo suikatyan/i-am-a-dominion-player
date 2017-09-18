@@ -4,6 +4,7 @@ import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
+import CellarArea from "actionArea/area/CellarArea";
 
 export default class Cellar extends AbstractActionCard implements Action {
   cardId() {
@@ -42,7 +43,13 @@ export default class Cellar extends AbstractActionCard implements Action {
     return true;
   }
 
-  async excute() {
-    this.excuteActionEffect();
+  protected async onExcute() {
+    const propertyHandler = this.context().turn.propertyHandler;
+    const area = new CellarArea(this.context().turn.hand.getCards());
+    const selectedCards = await area.play();
+
+    const selectedCardsLength = selectedCards.length;
+    propertyHandler.discard(selectedCards);
+    propertyHandler.draw(selectedCardsLength);
   }
 }

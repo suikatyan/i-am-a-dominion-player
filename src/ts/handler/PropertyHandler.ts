@@ -18,17 +18,12 @@ export default class PropertyHandler {
 
   draw(count = 1) : void {
     let cards: Card[] = [];
-    if (this.deck.count() >= count) {
-      cards = this.deck.popSome(count);
-    } else {
-      while (true) {
-        if (this.discarded.count() === 0) {
-          break;
-        }
-        cards = this.deck.popSome(this.deck.count());
-        this.rebornDeck();
-        cards.push(...this.deck.popSome(count - cards.length));
+    while (true) {
+      cards.push(...this.deck.popSome(count - cards.length));
+      if (this.discarded.count() === 0 || cards.length >= count) {
+        break;
       }
+      this.rebornDeck();
     }
 
     this.hand.pushSome(cards);
@@ -52,6 +47,17 @@ export default class PropertyHandler {
 
     for (const card of cards) {
       this.field.push(this.hand.removeCard(card.itemId()));
+    }
+  }
+
+  discard(cards: Card | Card[]) {
+    if (!Array.isArray(cards)) {
+      cards = [cards]
+    }
+
+    const itemIds = cards.map(card => card.itemId());
+    for (const itemId of itemIds) {
+      this.discarded.push(this.hand.removeCard(itemId));
     }
   }
 

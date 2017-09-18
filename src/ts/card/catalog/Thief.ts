@@ -41,7 +41,7 @@ export default class Thief extends AbstractActionCard implements Action {
     return true;
   }
 
-  async excute() {
-    this.excuteActionEffect();
+  protected async onExcute() {
+
   }
 }

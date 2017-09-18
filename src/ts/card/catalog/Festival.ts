@@ -44,7 +44,7 @@ export default class Festival extends AbstractActionCard implements Action {
     return true;
   }
 
-  async excute() {
-    this.excuteActionEffect();
+  protected async onExcute() {
+
   }
 }

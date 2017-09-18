@@ -43,7 +43,7 @@ export default class CouncilRoom extends AbstractActionCard implements Action {
     return true;
   }
 
-  async excute() {
-    this.excuteActionEffect();
+  protected async onExcute() {
+
   }
 }

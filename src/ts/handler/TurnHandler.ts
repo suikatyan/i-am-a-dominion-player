@@ -122,7 +122,7 @@ export default class TurnHandler implements Turn {
 
   async onStartBuyPhase() : Promise<boolean> {
     this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
-    
+
     // 購入に使う財宝カードの選択を受け付ける
     while (!this.isSkipableForCoinPick) {
       // 手札に財宝カードもアクションカードも無い場合は、購入フェーズで買い物出来なくなる問題の対策
@@ -189,7 +189,7 @@ export default class TurnHandler implements Turn {
 
     while (true) {
       // 在庫チェック
-      const isSoldout = this.marketHandler().isSoldout(result.card.cardId()) === 0;
+      const isSoldout = this.marketHandler().isSoldout(result.card.cardId());
       // コストチェック
       const isEnough = result.card.cost() <= this.context().turn.turnPointHandler.coin.get();
       if (!isSoldout && isEnough) {
