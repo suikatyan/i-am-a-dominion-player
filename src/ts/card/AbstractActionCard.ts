@@ -2,10 +2,14 @@ import AbstractCard from 'card/AbstractCard';
 import ActionEffectCollection from "card/ActionEffectCollection";
 import Context from "context/Context";
 import DI from "util/DI";
+import NotificationHandler from "handler/NotificationHandler";
+
 
 export default abstract class AbstractActionCard extends AbstractCard {
   @DI.inject()
   protected context: () => Context;
+  @DI.inject()
+  private notification: () => NotificationHandler;
 
   abstract effect() : ActionEffectCollection;
 
@@ -21,9 +25,12 @@ export default abstract class AbstractActionCard extends AbstractCard {
   }
 
   async excute() {
+    this.notification().say(`${this.name()}をプレイ中です。`);
     this.excuteActionEffect();
     await this.onExcute();
   }
 
   protected abstract async onExcute() : Promise<void>;
+  protected abstract name() : string;
+}
 }

@@ -40,7 +40,6 @@ export default class TurnHandler implements Turn {
 
   onStartTurn() {
     this.context().turn.initialize();
-    this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
   }
 
   async onStartActionPhase() : Promise<boolean> {
@@ -51,6 +50,7 @@ export default class TurnHandler implements Turn {
 
     // アクションフェーズで使うカードを受け付ける
     while (true) {
+      this.notification().say(this.context().turn.currentPlayer.name() + "の番です。\nアクションカードか財宝カードを選んでください。\nまたは、ターンを終了してください。");
       if (this.context().turn.turnPointHandler.action.get() <= 0) {
         return true;
       }
@@ -121,10 +121,9 @@ export default class TurnHandler implements Turn {
   }
 
   async onStartBuyPhase() : Promise<boolean> {
-    this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
-
     // 購入に使う財宝カードの選択を受け付ける
     while (!this.isSkipableForCoinPick) {
+      this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
       // 手札に財宝カードもアクションカードも無い場合は、購入フェーズで買い物出来なくなる問題の対策
       if (CardFilter.filter(this.context().turn.hand.getCards(), {include: [FilterKey.Treasure, FilterKey.Action]}).length === 0) {
         break;
