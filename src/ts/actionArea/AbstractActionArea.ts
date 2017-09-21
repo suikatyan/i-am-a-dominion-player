@@ -12,7 +12,7 @@ export default abstract class AbstractActionArea {
 
   async play() : Promise<Card[]> {
     const cards = await this.onPlay();
-    this.destoryDom();
+    // this.destoryDom();
     return cards;
   }
 
