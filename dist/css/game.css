@@ -153,11 +153,13 @@ div .card-count {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  overflow: auto;
 }
 
 #hand-cards .card {
   flex-basis: 104px;
-  height: 130px;
+  height: 110px;
   margin: 0 5px;
 }
 
@@ -169,6 +171,7 @@ div .card-count {
   flex-basis: 80px;
   height: auto;
   margin: 0 5px;
+  overflow: auto;
 }
 
 .card {
