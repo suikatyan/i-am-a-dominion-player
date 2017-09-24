@@ -6,10 +6,21 @@ const template = `
   <div id="action-area-head" class="action-area-column">
   <span id="action-area-description">{{parameters.description}}</span>
   </div>
-  <div id="action-area-body" class="action-area-column">
-    <div v-if="parameters.cards.length === 0">選択できるカードはありません。</div>
-    <div v-for="card in parameters.cards" @click="toggleSelect" v-bind:class="{'action-area-card-selected' : isSelected(card)}">
-      <card-component :card="card"></card-component>
+  <div id="action-area-market-body" class="action-area-column">
+    <div>
+      <div v-for="(card, index) in parameters.cards" @click="toggleSelect" v-bind:class="{'action-area-card-selected' : isSelected(card)}"  v-if="!card.isKingdomCard()">
+        <card-component :card="card"></card-component>
+      </div>
+    </div>
+    <div>
+      <div v-for="(card, index) in parameters.cards" @click="toggleSelect" v-bind:class="{'action-area-card-selected' : isSelected(card)}"  v-if="card.isKingdomCard() && index >= parameters.kingdomStartIndex && index < parameters.kingdomStartIndex + 5">
+        <card-component :card="card"></card-component>
+      </div>
+    </div>
+    <div>
+      <div v-for="(card, index) in parameters.cards" @click="toggleSelect" v-bind:class="{'action-area-card-selected' : isSelected(card)}" v-if="card.isKingdomCard() && index >= parameters.kingdomStartIndex + 5">
+        <card-component :card="card"></card-component>
+      </div>
     </div>
   </div>
   <div id="action-area-foot" class="action-area-column">

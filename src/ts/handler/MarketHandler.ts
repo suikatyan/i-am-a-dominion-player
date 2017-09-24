@@ -58,6 +58,10 @@ export default class MarketHandler {
     return this.cards;
   }
 
+  getMarketCardsWithoutCount() {
+    return this.cards.map(marketCard => marketCard.card);
+  }
+
   async deal(cardId: CardId) {
     for (let i = 0; i < this.cards.length; i++) {
       if (this.cards[i].card.cardId() === cardId) {
@@ -71,7 +75,7 @@ export default class MarketHandler {
   isSoldout(cardId: CardId) {
     const marketCard = this.cards.find(marketCard => marketCard.card.cardId() === cardId);
     if (marketCard) {
-      return marketCard.count === 0;
+      return marketCard.count <= 0;
     }
 
     throw new Error(`マーケットに${cardId}はありません。`);
@@ -86,5 +90,9 @@ export default class MarketHandler {
     }
 
     return cardIds;
+  }
+
+  getTrash() {
+    return this.trashCards;
   }
 }

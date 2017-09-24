@@ -23,7 +23,8 @@ export default abstract class AbstractCardSet {
 
   basicSupplyCards() : Map<CardId, number> {
     const victoryCount = this.playerCount === 2 ? 8 : 12;
-    const curseCount = this.playerCount * 10 - 10;
+    // const curseCount = this.playerCount * 10 - 10; // TODO: プレイヤー人数に関係なく固定値とする。playerCountが機能していないため
+    const curseCount = 30;
 
     return new Map([
       [CardId.Copper,   60],

@@ -3,8 +3,9 @@ import Vue from 'vue';
 import AbstractActionArea from "actionArea/AbstractActionArea";
 import EventAwaiter from "util/EventAwaiter";
 import DefaultAreaComponent from "component/area/DefaultAreaComponent";
+import Remodel from "card/catalog/Remodel";
 
-export default class CellarArea extends AbstractActionArea {
+export default class RemodelArea1 extends AbstractActionArea {
   protected cards: Card[] = [];
   protected selectedCards: Card[] = [];
 
@@ -22,11 +23,12 @@ export default class CellarArea extends AbstractActionArea {
       data: {
         parameters: {
           cards: this.cards,
-          description: "捨て札にするカードを選んでください。。捨て札にした枚数分、カードが引けます。",
+          source: new Remodel(),
+          description: "廃棄するカードを1枚選んでください。それよりもコストが最大2コイン多いカード1枚を獲得します。",
           selectedCards: this.selectedCards,
           count: {
-            max: Infinity,
-            min: 0,
+            max: 1,
+            min: this.cards.length === 0 ? 0 : 1,
           },
         },
       },

@@ -124,8 +124,8 @@ export default class TurnHandler implements Turn {
     // 購入に使う財宝カードの選択を受け付ける
     while (!this.isSkipableForCoinPick) {
       this.notification().say("財宝カードを選択してカードを購入してください。\nまたは、ターンを終了してください。");
-      // 手札に財宝カードもアクションカードも無い場合は、購入フェーズで買い物出来なくなる問題の対策
-      if (CardFilter.filter(this.context().turn.hand.getCards(), {include: [FilterKey.Treasure, FilterKey.Action]}).length === 0) {
+      // 手札に財宝カードが無い場合は、購入フェーズで買い物出来なくなる問題の対策
+      if (CardFilter.filter(this.context().turn.hand.getCards(), {include: [FilterKey.Treasure]}).length === 0) {
         break;
       }
 
@@ -146,6 +146,7 @@ export default class TurnHandler implements Turn {
       this.context().turn.hand.getCards(),
       {include: [FilterKey.Treasure]},
     );
+
     this.context().turn.turnPointHandler.coin.increase(treasureCards.reduce((previous, current) => {
       return current.category() === CardCategory.Treasure ? (<Treasure> current).value() + previous : previous;
     }, 0));

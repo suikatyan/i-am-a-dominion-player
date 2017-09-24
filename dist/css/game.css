@@ -226,6 +226,20 @@ div .card-count {
   margin: 0 5px;
 }
 
+#action-area-market-body {
+  height: 240px;
+}
+
+#action-area-market-body > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#action-area-market-body > div > div {
+  margin: 0 5px;
+}
+
 .action-area-card-selected {
   box-shadow: 0 0 8px 5px #e7bd62;
 }

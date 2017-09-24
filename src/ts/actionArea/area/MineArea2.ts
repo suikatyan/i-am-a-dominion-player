@@ -4,7 +4,7 @@ import AbstractActionArea from "actionArea/AbstractActionArea";
 import EventAwaiter from "util/EventAwaiter";
 import DefaultAreaComponent from "component/area/DefaultAreaComponent";
 
-export default class CellarArea extends AbstractActionArea {
+export default class MineArea2 extends AbstractActionArea {
   protected cards: Card[] = [];
   protected selectedCards: Card[] = [];
 
@@ -22,11 +22,11 @@ export default class CellarArea extends AbstractActionArea {
       data: {
         parameters: {
           cards: this.cards,
-          description: "捨て札にするカードを選んでください。。捨て札にした枚数分、カードが引けます。",
+          description: "廃棄した財宝カードよりもコストが最大3コイン多い財宝カード１枚を選んでください。そのカードを手札に加えます。",
           selectedCards: this.selectedCards,
           count: {
-            max: Infinity,
-            min: 0,
+            max: 1,
+            min: this.cards.length === 0 ? 0 : 1,
           },
         },
       },

@@ -26,6 +26,7 @@ export default class Session {
       const turn = new TurnHandler();
       await turn.start();
     }
+    alert("ゲーム終了！");
   }
 
   canContinue() : boolean {

@@ -2,9 +2,9 @@ import Card from "interface/card/Card";
 import Vue from 'vue';
 import AbstractActionArea from "actionArea/AbstractActionArea";
 import EventAwaiter from "util/EventAwaiter";
-import DefaultAreaComponent from "component/area/DefaultAreaComponent";
+import MarketAreaComponent from "component/area/MarketAreaComponent";
 
-export default class CellarArea extends AbstractActionArea {
+export default class RemodelArea1 extends AbstractActionArea {
   protected cards: Card[] = [];
   protected selectedCards: Card[] = [];
 
@@ -22,16 +22,17 @@ export default class CellarArea extends AbstractActionArea {
       data: {
         parameters: {
           cards: this.cards,
-          description: "捨て札にするカードを選んでください。。捨て札にした枚数分、カードが引けます。",
+          description: "廃棄したカードよりもコストが最大2コイン多いカード１枚を選んでください。そのカードを獲得します。",
           selectedCards: this.selectedCards,
           count: {
-            max: Infinity,
-            min: 0,
+            max: 1,
+            min: this.cards.length === 0 ? 0 : 1,
           },
+          kingdomStartIndex: this.cards.reduce((count, card) => card.isKingdomCard() ? count : ++count, 1),
         },
       },
       components: {
-        "area-component": DefaultAreaComponent,
+        "area-component": MarketAreaComponent,
       },
     });
   }

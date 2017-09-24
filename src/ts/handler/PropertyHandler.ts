@@ -29,6 +29,19 @@ export default class PropertyHandler {
     this.hand.pushSome(cards);
   }
 
+  openDeck(count = 1) {
+    let cards: Card[] = [];
+    while (true) {
+      cards.push(...this.deck.popSome(count - cards.length));
+      if (this.discarded.count() === 0 || cards.length >= count) {
+        break;
+      }
+      this.rebornDeck();
+    }
+
+    return cards;
+  }
+
   clean() {
     this.discarded.pushSome(this.hand.removeAllCard());
     this.discarded.pushSome(this.field.removeAllCard());

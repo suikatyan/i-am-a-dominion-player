@@ -46,7 +46,10 @@ export default class Cellar extends AbstractActionCard implements Action {
   protected async onExcute() {
     const propertyHandler = this.context().turn.propertyHandler;
     const area = new CellarArea(this.context().turn.hand.getCards());
+
+    area.start();
     const selectedCards = await area.play();
+    area.end();
 
     const selectedCardsLength = selectedCards.length;
     propertyHandler.discard(selectedCards);

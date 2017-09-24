@@ -7,7 +7,6 @@ const template = `
   <span id="action-area-description">{{parameters.description}}</span>
   </div>
   <div id="action-area-body" class="action-area-column">
-    <div v-if="parameters.cards.length === 0">選択できるカードはありません。</div>
     <div v-for="card in parameters.cards" @click="toggleSelect" v-bind:class="{'action-area-card-selected' : isSelected(card)}">
       <card-component :card="card"></card-component>
     </div>

@@ -11,25 +11,42 @@ export enum FilterKey {
 interface FilterKeys {
   include?: FilterKey[],
   exclude?: FilterKey[],
+  maxCost?: number,
+  minCost?: number,
 }
 
 export class CardFilter {
-  static filter(cards: Card[], keys: FilterKeys) {
+  static filter(cards: Card[], keys: FilterKeys) : Card[] {
     return cards.filter(card => {
-      const exclude = keys.exclude === undefined ? [] : keys.exclude;
-      for (const excludeKey of exclude) {
-        if (card.category() === CardCategory[excludeKey as keyof typeof FilterKey]) {
-          return false;
-        }
-      }
-      const include = keys.include === undefined ? [] : keys.include;
-      for (const includeKey of include) {
-        if (card.category() === CardCategory[includeKey as keyof typeof FilterKey]) {
-          return true;
-        }
+      if (keys.exclude !== void 0 && this.hasCategory(card, keys.exclude)) {
+        return false;
       }
 
-      return false;
+      if (keys.include !== void 0 &&!this.hasCategory(card, keys.include)) {
+        return false;
+      }
+
+      const maxCost = keys.maxCost === undefined ? Infinity : keys.maxCost;
+      if (card.cost() > maxCost) {
+        return false;
+      }
+
+      const minCost = keys.minCost === undefined ? 0 : keys.minCost;
+      if (card.cost() < minCost) {
+        return false;
+      }
+
+      return true;
     })
+  }
+
+  private static hasCategory(card: Card, categoryKeys: FilterKey[]) {
+    for (const key of categoryKeys) {
+      if (card.category() === CardCategory[key as keyof typeof FilterKey]) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

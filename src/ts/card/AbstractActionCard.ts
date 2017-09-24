@@ -3,13 +3,15 @@ import ActionEffectCollection from "card/ActionEffectCollection";
 import Context from "context/Context";
 import DI from "util/DI";
 import NotificationHandler from "handler/NotificationHandler";
-
+import MarketHandler from "handler/MarketHandler";
 
 export default abstract class AbstractActionCard extends AbstractCard {
   @DI.inject()
   protected context: () => Context;
   @DI.inject()
   private notification: () => NotificationHandler;
+  @DI.inject()
+  protected marketHandler: () => MarketHandler;
 
   abstract effect() : ActionEffectCollection;
 
@@ -32,5 +34,4 @@ export default abstract class AbstractActionCard extends AbstractCard {
 
   protected abstract async onExcute() : Promise<void>;
   protected abstract name() : string;
-}
 }

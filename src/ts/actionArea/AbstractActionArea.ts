@@ -1,23 +1,22 @@
-import Card from "interface/card/Card";
 import Vue from 'vue';
+import Context from "context/Context";
+import DI from "util/DI";
 
 export default abstract class AbstractActionArea {
   static AREA_ID = "action-area";
   static DONE_BUTTON_ID = "action-area-done-button";
 
   protected view: Vue;
+  @DI.inject()
+  protected context: () => Context;
 
-  constructor() {
+  start() {
     this.createArea();
   }
 
-  async play() : Promise<Card[]> {
-    const cards = await this.onPlay();
+  end() {
     this.destoryArea();
-    return cards;
   }
-
-  protected abstract async onPlay() : Promise<Card[]>;
 
   private createArea() {
     const div = document.createElement("div");

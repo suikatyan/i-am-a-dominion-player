@@ -23,7 +23,6 @@ export default class Dominion extends AbstractApplication {
     } else {
       throw new Error("Dominion buildCardSet error: カードセットの名前が不正です。");
     }
-
   }
 
   async startSession() {
