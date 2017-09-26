@@ -4,6 +4,8 @@ import CardId from "list/CardId";
 import CardCategory from "list/CardCategory";
 import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
+import {CardFilter} from "util/CardFilter";
+import WorkshopArea from "actionArea/area/WorkshopArea";
 
 export default class Workshop extends AbstractActionCard implements Action {
   cardId() {
@@ -41,6 +43,21 @@ export default class Workshop extends AbstractActionCard implements Action {
   }
 
   protected async onExcute() {
+    const marketHandler = this.marketHandler();
 
+    const cardsInMarket = CardFilter.filter(
+      marketHandler.getMarketCardsWithoutCount(),
+      {maxCost: 4},
+    );
+    const availableCardsInMarket = cardsInMarket.filter(card => {
+      return !marketHandler.isSoldout(card.cardId());
+    });
+
+    const area2 = new WorkshopArea(availableCardsInMarket);
+    area2.start();
+    const [selectedCardToDiscarded] = await area2.play();
+    area2.end();
+
+    this.context().turn.discarded.push(await marketHandler.deal(selectedCardToDiscarded.cardId()));
   }
 }

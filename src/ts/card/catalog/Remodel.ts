@@ -6,7 +6,7 @@ import ActionCategory from "list/ActionCategory";
 import ActionEffectCollection from "card/ActionEffectCollection";
 import RemodelArea1 from "actionArea/area/RemodelArea1";
 import RemodelArea2 from "actionArea/area/RemodelArea2";
-import {CardFilter, FilterKey} from "util/CardFilter";
+import {CardFilter} from "util/CardFilter";
 
 export default class Remodel extends AbstractActionCard implements Action {
   cardId() {

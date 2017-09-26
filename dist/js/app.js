@@ -12121,7 +12121,7 @@ class Woodcutter extends AbstractActionCard_1.default {
     }
     effect() {
         return new ActionEffectCollection_1.default({
-            card: 2,
+            buy: 1,
             coin: 2,
         });
     }
@@ -12146,6 +12146,8 @@ const CardId_1 = __webpack_require__(0);
 const CardCategory_1 = __webpack_require__(1);
 const ActionCategory_1 = __webpack_require__(3);
 const ActionEffectCollection_1 = __webpack_require__(4);
+const CardFilter_1 = __webpack_require__(83);
+const WorkshopArea_1 = __webpack_require__(97);
 class Workshop extends AbstractActionCard_1.default {
     cardId() {
         return CardId_1.default.Workshop;
@@ -12174,6 +12176,16 @@ class Workshop extends AbstractActionCard_1.default {
         return true;
     }
     async onExcute() {
+        const marketHandler = this.marketHandler();
+        const cardsInMarket = CardFilter_1.CardFilter.filter(marketHandler.getMarketCardsWithoutCount(), { maxCost: 4 });
+        const availableCardsInMarket = cardsInMarket.filter(card => {
+            return !marketHandler.isSoldout(card.cardId());
+        });
+        const area2 = new WorkshopArea_1.default(availableCardsInMarket);
+        area2.start();
+        const [selectedCardToDiscarded] = await area2.play();
+        area2.end();
+        this.context().turn.discarded.push(await marketHandler.deal(selectedCardToDiscarded.cardId()));
     }
 }
 exports.default = Workshop;
@@ -14529,6 +14541,56 @@ class RemodelArea1 extends AbstractActionArea_1.default {
     }
 }
 exports.default = RemodelArea1;
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const vue_1 = __webpack_require__(8);
+const AbstractActionArea_1 = __webpack_require__(70);
+const EventAwaiter_1 = __webpack_require__(17);
+const MarketAreaComponent_1 = __webpack_require__(93);
+class WorkshopArea extends AbstractActionArea_1.default {
+    constructor(cards) {
+        super();
+        this.cards = [];
+        this.selectedCards = [];
+        this.cards = cards;
+    }
+    start() {
+        super.start();
+        this.view = new vue_1.default({
+            el: "#" + AbstractActionArea_1.default.AREA_ID,
+            data: {
+                parameters: {
+                    cards: this.cards,
+                    description: "コスト最大４コインまでのカード１枚を選んでください。そのカードを獲得します。",
+                    selectedCards: this.selectedCards,
+                    count: {
+                        max: 1,
+                        min: 1,
+                    },
+                    kingdomStartIndex: this.cards.reduce((count, card) => card.isKingdomCard() ? count : ++count, 1),
+                },
+            },
+            components: {
+                "area-component": MarketAreaComponent_1.default,
+            },
+        });
+    }
+    async play() {
+        await EventAwaiter_1.default.awaiter({
+            targets: document.querySelector("#" + AbstractActionArea_1.default.DONE_BUTTON_ID),
+            type: "click",
+        });
+        return this.selectedCards;
+    }
+}
+exports.default = WorkshopArea;
 
 
 /***/ })

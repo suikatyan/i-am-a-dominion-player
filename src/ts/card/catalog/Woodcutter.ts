@@ -34,7 +34,7 @@ export default class Woodcutter extends AbstractActionCard implements Action {
 
   effect() {
     return new ActionEffectCollection({
-      card: 2,
+      buy : 1,
       coin: 2,
     });
   }
